@@ -2,33 +2,44 @@
 
 ## Objective
 
-Set up a dedicated Firebase workspace for CLI tooling targeted at the `vertexai-prompt-templates` project. Architect a centralized initialization for the Firebase App, AppCheck, and Remote Config using a root-provided `ConfigService`. This service will guarantee singleton instantiation, perform initial setup during app startup, and keep references to the `#appInstance` and `#remoteConfig` for application-wide reuse.
+Set up a dedicated Firebase workspace for CLI tooling targeted at the `vertexai-prompt-templates` project. Pin `firebase-tools` as a root dev dependency to ensure a reproducible environment, and add a custom script to streamline downloading Remote Config defaults. Architect a centralized initialization for the Firebase App, AppCheck, and Remote Config using a root-provided `ConfigService` that guarantees singleton instantiation.
 
 ## Scope
 
-1. **Firebase Workspace Setup**: Create an isolated `firebase-workspace` directory and configure the Firebase CLI for the target project, including downloading Remote Config defaults.
-2. **Centralized Service Setup**:
+1. **Tooling & Scripts**:
+   - Add `firebase-tools` as a pinned devDependency in the root `package.json`.
+   - Add an npm script in the root `package.json` to download Remote Config defaults directly into the workspace.
+2. **Firebase Workspace Setup**: Create an isolated `firebase-workspace` directory and configure the Firebase CLI (`.firebaserc`, `firebase.json`) for the target project.
+3. **Centralized Service Setup**:
    - Create `src/app/ai/services/config.service.ts` (`providedIn: 'root'`) to encapsulate initialization and hold the references using private class fields.
-3. **Refactor AI Provider**:
+4. **Refactor AI Provider**:
    - Rename `src/app/ai/ai.provider.ts` to `src/app/ai/ai-models.provider.ts`.
    - Update `provideAIModels` to inject the `ConfigService` to access the shared Firebase app instance.
-4. **Angular App Initialization**:
+5. **Angular App Initialization**:
    - Update `app.config.ts` to include `provideAppInitializer`.
    - Inject the `ConfigService` inside the initializer and trigger its initialization routine.
    - Ensure `provideAppInitializer` is placed before `provideAIModels()` in the `appConfig` providers array.
 
 ## Implementation Steps
 
-### Phase 1: Firebase Workspace Initialization & Configuration
+### Phase 1: Tooling & Firebase Workspace Setup
 
-1. **Create Workspace Directory**:
+1. **Update Root `package.json`**:
+   - Install `firebase-tools` as a development dependency at the root of the project to pin the version.
+   - Add a custom script to the `scripts` section:
+
+     ```json
+     "firebase:remoteconfig": "cd firebase-workspace && firebase remoteconfig:get --project vertexai-prompt-templates -o remote_config_defaults.json"
+     ```
+
+2. **Create Workspace Directory**:
    - Create a new folder named `firebase-workspace` at the root of the project.
-2. **Initialize Firebase**:
+3. **Initialize Firebase**:
    - Change directory to `firebase-workspace`.
-   - Run `npx -y firebase-tools@latest use vertexai-prompt-templates` to set the active project.
-   - Run `npx -y firebase-tools@latest init` to generate `.firebaserc` and `firebase.json` files within this directory.
-3. **Download Remote Config Defaults**:
-   - Retrieve the Remote Config template defaults explicitly for the correct project using the Firebase CLI (`npx -y firebase-tools@latest remoteconfig:get --project vertexai-prompt-templates -o remote_config_defaults.json`) and save this file inside the `firebase-workspace/` directory.
+   - Run `npx firebase use vertexai-prompt-templates` to set the active project.
+   - Run `npx firebase init` to generate `.firebaserc` and `firebase.json` files within this directory.
+4. **Download Remote Config Defaults**:
+   - Run the newly created npm script from the root: `npm run firebase:remoteconfig`. This will save the `remote_config_defaults.json` file inside the `firebase-workspace/` directory.
 
 ### Phase 2: Create Centralized ConfigService
 
@@ -85,7 +96,16 @@ Set up a dedicated Firebase workspace for CLI tooling targeted at the `vertexai-
 
          // 3. Initialize Remote Config
          this.#remoteConfig = getRemoteConfig(this.#appInstance);
-         this.#remoteConfig.defaultConfig = rcDefaults;
+         const simplifiedDefaults: Record<string, string | number | boolean> = {};
+         if (rcDefaults.parameters) {
+           Object.keys(rcDefaults.parameters).forEach((key) => {
+             const param = (rcDefaults.parameters as any)[key];
+             if (param.defaultValue && param.defaultValue.value !== undefined) {
+               simplifiedDefaults[key] = param.defaultValue.value;
+             }
+           });
+         }
+         this.#remoteConfig.defaultConfig = simplifiedDefaults;
          this.#remoteConfig.settings.minimumFetchIntervalMillis = isDevMode() ? 0 : 3600000;
 
          // 4. Fetch and Activate

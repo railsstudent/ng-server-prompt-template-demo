@@ -1,10 +1,10 @@
 {
   "parameters": {
-    "historicEventTemplateId": {
+    "countryTemplateId": {
       "defaultValue": {
-        "value": "historic-event-v0-0-1"
+        "value": "country-v0-0-1"
       },
-      "description": "Historic Event Template Id",
+      "description": "Country Prompt Template Id",
       "valueType": "STRING"
     },
     "diecastVehicleTemplateId": {
@@ -12,6 +12,13 @@
         "value": "diecast-vehicle-v0-0-1"
       },
       "description": "Diecast Vehicle Prompt Template Id",
+      "valueType": "STRING"
+    },
+    "historicEventTemplateId": {
+      "defaultValue": {
+        "value": "historic-event-v0-0-1"
+      },
+      "description": "Historic Event Template Id",
       "valueType": "STRING"
     },
     "glassBottleSouvenirTemplateId": {
@@ -26,13 +33,6 @@
         "value": "3d-map-v0-0-1"
       },
       "description": "Three dimensional map template id",
-      "valueType": "STRING"
-    },
-    "countryMapTemplateId": {
-      "defaultValue": {
-        "value": "country-map-v0-0-1"
-      },
-      "description": "Country map template id",
       "valueType": "STRING"
     },
     "figurineTemplateId": {
