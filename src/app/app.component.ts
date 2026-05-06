@@ -14,7 +14,7 @@ export class AppComponent {
   inlineImageData = signal('');
 
   generateImage() {
-    this.model.generateContent('historic-event-v0-0-2', {
+    this.model.generateContent('historic-event-v0-0-1', {
       event: '2002 Olympic',
       description: 'The Queen jumped from the helicopter',
     }).then((x) => {

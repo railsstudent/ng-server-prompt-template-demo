@@ -26,6 +26,7 @@ Create a `.env.example` file in the project root with the following placeholders
 FIREBASE_VERTEX_LOCATION=global
 RECAPTCHA_ENTERPRISE_KEY=your_recaptcha_site_key
 FIREBASE_API_KEY=your_api_key_here
+FIREBASE_STORAGE_BUCKET=your_project_id.firebasestorage.app
 FIREBASE_AUTH_DOMAIN=your_project_id.firebaseapp.com
 FIREBASE_PROJECT_ID=your_project_id
 FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
@@ -66,6 +67,7 @@ const config = {
   apiKey: process.env.FIREBASE_API_KEY,
   authDomain: process.env.FIREBASE_AUTH_DOMAIN,
   projectId: process.env.FIREBASE_PROJECT_ID,
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
   messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
   appId: process.env.FIREBASE_APP_ID,
   measurementId: process.env.FIREBASE_MEASUREMENT_ID,
