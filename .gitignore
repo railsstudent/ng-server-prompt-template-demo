@@ -6,8 +6,12 @@
 /out-tsc
 /bazel-out
 
+# Firebase & Environment Config
+.env
+src/firebase.config.json
+
 # Node
-/node_modules
+node_modules/
 npm-debug.log
 yarn-error.log
 

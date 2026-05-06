@@ -3,7 +3,10 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
+    "config": "node scripts/generate-firebase-config.js",
+    "prestart": "npm run config",
     "start": "ng serve",
+    "prebuild": "npm run config",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
@@ -33,6 +36,7 @@
     "@angular/platform-browser": "21.2.11",
     "@angular/router": "21.2.11",
     "@tailwindcss/postcss": "4.2.4",
+    "firebase": "12.12.1",
     "postcss": "8.5.14",
     "rxjs": "~7.8.0",
     "tailwindcss": "4.2.4",
