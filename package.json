@@ -14,7 +14,7 @@
     "format": "prettier --write .",
     "prepare": "husky",
     "commitlint": "commitlint --edit",
-    "firebase:remoteconfig": "cd firebase-workspace && firebase remoteconfig:get --project vertexai-prompt-templates -o remote_config_defaults.json"
+    "firebase:remoteconfig": "node scripts/download-remote-config.js"
   },
   "prettier": {
     "printWidth": 100,

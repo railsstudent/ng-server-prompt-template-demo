@@ -2,7 +2,7 @@ import { Injectable, isDevMode } from '@angular/core';
 import { FirebaseApp, initializeApp } from 'firebase/app';
 import { initializeAppCheck, ReCaptchaEnterpriseProvider } from 'firebase/app-check';
 import { fetchAndActivate, getRemoteConfig, RemoteConfig } from 'firebase/remote-config';
-import rcDefaults from '../../../../firebase-workspace/remote_config_defaults.json';
+import rcDefaults from '@/firebase-workspace/remote_config_defaults.json';
 import firebaseConfig from '../../../firebase.config.json';
 
 @Injectable({
@@ -47,19 +47,7 @@ export class ConfigService {
 
     // 3. Initialize Remote Config
     this.#remoteConfig = getRemoteConfig(this.#appInstance);
-    // Remote Config defaults should be an object of key-value pairs.
-    // The downloaded template has a "parameters" property. We need to map it or pass it correctly.
-    // Actually, defaultConfig expects a Record<string, string | number | boolean>.
-    const simplifiedDefaults: Record<string, string | number | boolean> = {};
-    if (rcDefaults.parameters) {
-      Object.keys(rcDefaults.parameters).forEach((key) => {
-        const param = (rcDefaults.parameters as any)[key];
-        if (param.defaultValue && param.defaultValue.value !== undefined) {
-          simplifiedDefaults[key] = param.defaultValue.value;
-        }
-      });
-    }
-    this.#remoteConfig.defaultConfig = simplifiedDefaults;
+    this.#remoteConfig.defaultConfig = rcDefaults;
     this.#remoteConfig.settings.minimumFetchIntervalMillis = isDevMode() ? 0 : 3600000;
 
     // 4. Fetch and Activate

@@ -14,7 +14,12 @@
     "importHelpers": true,
     "resolveJsonModule": true,
     "target": "ES2022",
-    "module": "preserve"
+    "module": "preserve",
+    "paths": {
+      "@/shared-libs/*": ["./shared-libs/*"],
+      "@/firebase-workspace/*": ["./firebase-workspace/*"],
+      "@/*": ["./src/app/*"]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
