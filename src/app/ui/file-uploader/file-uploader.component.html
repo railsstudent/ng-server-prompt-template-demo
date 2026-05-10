@@ -1,0 +1,52 @@
+<div
+  class="drop-zone"
+  tabindex="0"
+  role="button"
+  [class.drag-over]="isDragOver()"
+  [class.has-error]="hasError()"
+  (dragover)="onDragOver($event)"
+  (dragleave)="onDragLeave($event)"
+  (drop)="onDrop($event)"
+  (click)="fileInput.click()"
+  (keydown.enter)="fileInput.click()"
+  (keydown.space)="fileInput.click(); $event.preventDefault()"
+>
+  <input
+    #fileInput
+    type="file"
+    class="hidden"
+    (change)="onFileSelect($event)"
+    accept="image/*"
+  />
+
+  <div class="z-10 flex flex-col items-center justify-center text-center p-4">
+    <app-upload-icon class="w-10 h-10 mb-3 text-indigo-400" [class.opacity-50]="previewUrl()" />
+    @if (hasError()) {
+      <p class="mb-2 text-sm font-semibold text-red-600 bg-white/80 px-2 py-1 rounded">
+        {{ errorMessage() }}
+      </p>
+    } @else if (!previewUrl()) {
+      <p class="mb-2 text-sm text-gray-500">
+        <span class="font-semibold text-indigo-500">Click to upload</span> or drag and drop
+      </p>
+      <p class="text-xs text-gray-400">{{ helperText() }}</p>
+    }
+  </div>
+
+  @if (previewUrl(); as url) {
+    <div class="preview-container group">
+      <div class="image-wrapper">
+        <img [src]="url" class="preview-image" alt="File preview" />
+        <button class="remove-button" (click)="removeFile($event)" aria-label="Remove file">
+          <app-trash-icon class="w-5 h-5" />
+        </button>
+      </div>
+    </div>
+  }
+
+  @if (uploadProgress() !== null) {
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" [style.width.%]="uploadProgress()"></div>
+    </div>
+  }
+</div>

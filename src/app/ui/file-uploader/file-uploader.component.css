@@ -1,0 +1,42 @@
+@reference "../../../styles.css";
+
+:host {
+  @apply block w-full;
+}
+
+.drop-zone {
+  @apply relative flex flex-col items-center justify-center w-full h-96 border-2 border-dashed rounded-lg cursor-pointer transition-colors overflow-hidden;
+  @apply border-gray-300 bg-gray-50 hover:bg-gray-100;
+}
+
+.drop-zone.drag-over {
+  @apply border-indigo-500 bg-indigo-50;
+}
+
+.drop-zone.has-error {
+  @apply border-red-500 bg-red-50 hover:bg-red-100;
+}
+
+.preview-container {
+  @apply absolute inset-0 flex items-center justify-center bg-white/80 backdrop-blur-sm p-6 z-20;
+}
+
+.image-wrapper {
+  @apply relative flex max-w-full max-h-full;
+}
+
+.preview-image {
+  @apply max-w-full max-h-full object-contain rounded drop-shadow-md border border-gray-100;
+}
+
+.remove-button {
+  @apply absolute top-2 right-2 flex items-center justify-center w-8 h-8 bg-white hover:bg-red-500 hover:text-white text-gray-700 rounded-full opacity-0 group-hover:opacity-100 transition-all shadow-lg z-30 border border-gray-100;
+}
+
+.progress-bar-container {
+  @apply absolute bottom-0 left-0 w-full h-1.5 bg-gray-200 overflow-hidden z-30;
+}
+
+.progress-bar-fill {
+  @apply h-full bg-indigo-500 transition-all duration-300 ease-out;
+}
