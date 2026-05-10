@@ -1,9 +1,18 @@
-<header>
-  <h1 class="text-4xl font-bold underline">Intelligent Task Hub</h1>
-</header>
-<router-outlet />
-<footer class="bg-gray-800 mt-auto">
-  <div class="container mx-auto px-6 py-4 text-center text-gray-400">
-    <p>&copy; 2026 Intelligent Task Hub. Built with Angular, Gemini, Firebase, Firebase AI Logic & Tailwind.</p>
+<div class="flex h-screen w-screen overflow-hidden bg-white text-gray-800">
+  <!-- SideNav on the left -->
+  <app-side-nav class="w-64 flex-shrink-0"></app-side-nav>
+
+  <!-- Main content area on the right -->
+  <div class="flex flex-col flex-1 overflow-hidden">
+    <!-- Header on top of main content -->
+    <app-header class="flex-shrink-0"></app-header>
+    
+    <!-- Router outlet (Home/Main Content) -->
+    <main class="flex-1 overflow-auto p-4">
+      <router-outlet></router-outlet>
+    </main>
+
+    <!-- Footer at the bottom of main content -->
+    <app-footer class="flex-shrink-0"></app-footer>
   </div>
-</footer>
+</div>

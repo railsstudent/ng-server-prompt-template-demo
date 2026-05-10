@@ -1,0 +1,41 @@
+@reference "../../../styles.css";
+
+:host {
+  @apply flex flex-col h-full bg-indigo-800 text-white shadow-md transition-all duration-300 w-16 hover:w-64 overflow-hidden whitespace-nowrap;
+}
+
+.nav-header {
+  @apply flex items-center p-4 mb-6;
+}
+
+.nav-title-icon {
+  @apply font-bold text-xl min-w-[2rem] text-center;
+}
+
+.nav-title-text {
+  @apply font-bold text-xl ml-4 transition-opacity duration-300 opacity-0;
+}
+
+:host(:hover) .nav-title-text {
+  @apply opacity-100;
+}
+
+.nav-list {
+  @apply flex flex-col;
+}
+
+.nav-link {
+  @apply flex items-center py-3 px-4 hover:bg-indigo-700 hover:text-indigo-100 transition-colors;
+}
+
+.nav-icon {
+  @apply w-6 h-6 flex-shrink-0 flex items-center justify-center;
+}
+
+.nav-text {
+  @apply ml-4 transition-opacity duration-300 opacity-0;
+}
+
+:host(:hover) .nav-text {
+  @apply opacity-100;
+}

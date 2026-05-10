@@ -5,10 +5,10 @@ export const routes: Routes = [
     path: 'error',
     loadComponent: () => import('./ui/error/error.component'),
   },
-  // {
-  //   path: 'home',
-  //   redirectTo: () => import('/home/home.component'),
-  // },
+  {
+    path: 'home',
+    loadComponent: () => import('./home/home.component'),
+  },
   // {
   //   path: 'edit-images/:path',
   //   redirectTo: () => import('/edit-images/edit-images.component'),
@@ -25,13 +25,13 @@ export const routes: Routes = [
   //   path: 'history-event-form',
   //   loadComponent: () => import('/historic-event-form/history-event-form.component'),
   // },
-  // {
-  //   path: '',
-  //   pathMatch: 'full',
-  //   redirectTo: 'home',
-  // },
-  // {
-  //   path: '**',
-  //   redirectTo: 'home'
-  // },
+  {
+    path: '',
+    pathMatch: 'full',
+    redirectTo: 'home',
+  },
+  {
+    path: '**',
+    redirectTo: 'home',
+  },
 ];
