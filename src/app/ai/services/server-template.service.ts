@@ -1,4 +1,4 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { FinishReason } from 'firebase/ai';
 import { SERVER_TEMPLATE_MODEL } from '../constants/server-template-model.token';
 
@@ -6,16 +6,9 @@ import { SERVER_TEMPLATE_MODEL } from '../constants/server-template-model.token'
   providedIn: 'root',
 })
 export class ServerTemplateService {
-  countryTemplateId = signal('');
-  diecastTemplateId = signal('');
-  figurineTemplateId = signal('');
-  glassBottleTemplateId = signal('');
-  historicEventTemplateId = signal('');
-  threeDimentionsMapTemplateId = signal('');
-
   #model = inject(SERVER_TEMPLATE_MODEL);
 
-  async generateContent(templateId: string, params: Record<string, any>): Promise<string> {
+  async generateContent(templateId: string, params: Record<string, unknown>): Promise<string> {
     const result = await this.#model.generateContent(templateId, params);
 
     const candidates = result.response.candidates || [];
@@ -29,15 +22,22 @@ export class ServerTemplateService {
         const data = part.inlineData?.data;
         const mimeType = part.inlineData?.mimeType;
         if (data && mimeType) {
-          return `data:${mimeType};base64,${data}`
+          return `data:${mimeType};base64,${data}`;
         }
       }
     }
 
-    const abnormalCandidates = candidates.filter((candidate) => candidate.finishReason && candidate.finishReason != FinishReason.STOP);
+    const abnormalCandidates = candidates.filter(
+      (candidate) => candidate.finishReason && candidate.finishReason != FinishReason.STOP,
+    );
     if (abnormalCandidates.length > 0) {
       for (const candidate of abnormalCandidates) {
-        console.error('Finish reason:', candidate.finishReason, 'Finish message', candidate.finishMessage);
+        console.error(
+          'Finish reason:',
+          candidate.finishReason,
+          'Finish message',
+          candidate.finishMessage,
+        );
       }
     }
 

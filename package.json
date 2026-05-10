@@ -14,7 +14,8 @@
     "format": "prettier --write .",
     "prepare": "husky",
     "commitlint": "commitlint --edit",
-    "firebase:remoteconfig": "node scripts/download-remote-config.js"
+    "firebase:remoteconfig": "node scripts/download-remote-config.js",
+    "lintstaged": "lint-staged"
   },
   "prettier": {
     "printWidth": 100,

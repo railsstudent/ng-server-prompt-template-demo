@@ -18,6 +18,7 @@
     "paths": {
       "@/shared-libs/*": ["./shared-libs/*"],
       "@/firebase-workspace/*": ["./firebase-workspace/*"],
+      "@/firebase.config.json": ["./src/firebase.config.json"],
       "@/*": ["./src/app/*"]
     }
   },

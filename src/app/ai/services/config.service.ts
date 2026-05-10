@@ -1,9 +1,9 @@
+import rcDefaults from '@/firebase-workspace/remote_config_defaults.json';
+import firebaseConfig from '@/firebase.config.json';
 import { Injectable, isDevMode } from '@angular/core';
 import { FirebaseApp, initializeApp } from 'firebase/app';
 import { initializeAppCheck, ReCaptchaEnterpriseProvider } from 'firebase/app-check';
 import { fetchAndActivate, getRemoteConfig, RemoteConfig } from 'firebase/remote-config';
-import rcDefaults from '@/firebase-workspace/remote_config_defaults.json';
-import firebaseConfig from '../../../firebase.config.json';
 
 @Injectable({
   providedIn: 'root',

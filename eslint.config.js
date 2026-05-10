@@ -14,6 +14,7 @@ module.exports = defineConfig([
       angular.configs.tsRecommended,
     ],
     processor: angular.processInlineTemplates,
+    ignores: ['**/*.spec.ts'],
     rules: {
       '@angular-eslint/directive-selector': [
         'error',
