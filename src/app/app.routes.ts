@@ -1,4 +1,9 @@
 import { Routes } from '@angular/router';
+import {
+  editePageTitleResolver,
+  editeRouteTitleResolver,
+  getTemplateKeyIdResolver,
+} from './routes.resolver';
 
 export const routes: Routes = [
   {
@@ -12,9 +17,10 @@ export const routes: Routes = [
   {
     path: 'edit-image/:path',
     loadComponent: () => import('./edit-image/edit-image.component'),
-    title: 'Edit Images', // to be handled by a resolver
-    data: {
-      templateKey: 'glassBottleSouvenirTemplateId', // to be handled by a resolver
+    title: editeRouteTitleResolver,
+    resolve: {
+      pageTitle: editePageTitleResolver,
+      templateKey: getTemplateKeyIdResolver,
     },
   },
   // {
@@ -22,8 +28,8 @@ export const routes: Routes = [
   //   loadComponent: () => import('/country-form/country-form.component'),
   // },
   // {
-  //   path: 'history-event-form',
-  //   loadComponent: () => import('/historic-event-form/history-event-form.component'),
+  //   path: 'historic-event-form',
+  //   loadComponent: () => import('/historic-event-form/historic-event-form.component'),
   // },
   {
     path: '',

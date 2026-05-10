@@ -8,9 +8,10 @@ import {
   output,
   signal,
 } from '@angular/core';
-import { GlobalStateService } from '../services/global-state.service';
 import { TrashIconComponent } from '../icons/trash-icon.component';
 import { UploadIconComponent } from '../icons/upload-icon.component';
+import { GlobalStateService } from '../services/global-state.service';
+import { FileUpload } from '../types/file-upload.type';
 
 const KILOBYTES = 1024;
 const MAX_MBS = 20;
@@ -27,7 +28,7 @@ export class FileUploaderComponent {
   private destroyRef = inject(DestroyRef);
 
   maxSize = input(MAX_MBS * KILOBYTES * KILOBYTES);
-  fileChanged = output<File | undefined>();
+  fileChanged = output<FileUpload | undefined>();
 
   protected isDragOver = signal(false);
   protected previewUrl = signal<string | undefined>(undefined);
@@ -93,7 +94,7 @@ export class FileUploaderComponent {
     this.currentReader.onload = () => {
       this.previewUrl.set(this.currentReader?.result as string);
       this.uploadProgress.set(null);
-      this.fileChanged.emit(file);
+      this.fileChanged.emit({ file, url: this.previewUrl() || '' });
     };
 
     this.currentReader.onerror = () => {

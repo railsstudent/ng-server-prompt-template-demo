@@ -1,0 +1,80 @@
+import { NavItem } from '@/types/nav-item.type';
+import { BottleIconComponent } from '@/ui/icons/bottle-icon.component';
+import { CarIconComponent } from '@/ui/icons/car-icon.component';
+import { FigurineIconComponent } from '@/ui/icons/figurine-icon.component';
+import { FlagIconComponent } from '@/ui/icons/flag-icon.component';
+import { HistoryIconComponent } from '@/ui/icons/history-icon.component';
+import { HomeIconComponent } from '@/ui/icons/home-icon.component';
+import { MapIconComponent } from '@/ui/icons/map-icon.component';
+import { Injectable } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class NavService {
+  navItems: NavItem[] = [
+    {
+      id: 0,
+      label: 'Home',
+      path: '/',
+      isExact: true,
+      iconComponent: HomeIconComponent,
+      title: 'Home',
+      pageTitle: 'Home',
+    },
+    {
+      id: 1,
+      label: 'Glass Bottle Souvenir',
+      path: '/edit-image/glass-bottle-souvenir',
+      iconComponent: BottleIconComponent,
+      title: 'Glass Bottle',
+      pageTitle: 'Generate a glass bottle souvenir',
+      templateKeyId: 'glassBottleSouvenirTemplateId',
+    },
+    {
+      id: 2,
+      label: 'Figurine',
+      path: '/edit-image/figurine',
+      iconComponent: FigurineIconComponent,
+      title: 'Figurine',
+      pageTitle: 'Generate a Japanese-styled figurine',
+      templateKeyId: 'figurineTemplateId',
+    },
+    {
+      id: 3,
+      label: '3D Map',
+      path: '/edit-image/map',
+      iconComponent: MapIconComponent,
+      title: 'Map',
+      pageTitle: 'Generate a three-dimensional map',
+      templateKeyId: 'threeDimentionsMapTemplateId',
+    },
+    {
+      id: 4,
+      label: 'Diecast Vehicle',
+      path: '/edit-image/diecast-vehicle',
+      iconComponent: CarIconComponent,
+      title: 'Diecast Vehicle',
+      pageTitle: 'Generate a diecast vehicle with your brand',
+      templateKeyId: 'diecastVehicleTemplateId',
+    },
+    {
+      id: 5,
+      label: 'Flags',
+      path: '/country-form/flags',
+      iconComponent: FlagIconComponent,
+      title: 'Country',
+      pageTitle: 'Learn about this country',
+      templateKeyId: 'countryTemplateId',
+    },
+    {
+      id: 6,
+      label: 'History',
+      path: '/historic-event-form',
+      iconComponent: HistoryIconComponent,
+      title: 'History Event',
+      pageTitle: 'What happened in this historic event?',
+      templateKeyId: 'historicEventTemplateId',
+    },
+  ];
+}
