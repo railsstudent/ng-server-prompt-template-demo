@@ -1,6 +1,6 @@
 import { Injectable, signal } from '@angular/core';
 import { getValue, RemoteConfig } from 'firebase/remote-config';
-import { TEMPLATE_KEYS } from '../constants/template_keys.const';
+import { TEMPLATE_KEYS } from '../constants/template-keys.const';
 import { TemplateKey, TemplateMap } from '../types/template-key.type';
 
 @Injectable({
