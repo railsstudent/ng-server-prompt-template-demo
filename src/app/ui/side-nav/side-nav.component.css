@@ -28,6 +28,10 @@
   @apply flex items-center py-3 px-4 hover:bg-indigo-700 hover:text-indigo-100 transition-colors;
 }
 
+.nav-active {
+  @apply bg-indigo-600 text-white font-semibold;
+}
+
 .nav-icon {
   @apply w-6 h-6 flex-shrink-0 flex items-center justify-center;
 }

@@ -6,6 +6,7 @@ import { FlagIconComponent } from '../icons/flag-icon.component';
 import { HistoryIconComponent } from '../icons/history-icon.component';
 import { HomeIconComponent } from '../icons/home-icon.component';
 import { MapIconComponent } from '../icons/map-icon.component';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-side-nav',
@@ -17,6 +18,8 @@ import { MapIconComponent } from '../icons/map-icon.component';
     CarIconComponent,
     FlagIconComponent,
     HistoryIconComponent,
+    RouterLink,
+    RouterLinkActive,
   ],
   templateUrl: './side-nav.component.html',
   styleUrl: './side-nav.component.css',

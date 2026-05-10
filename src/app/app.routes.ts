@@ -9,14 +9,14 @@ export const routes: Routes = [
     path: 'home',
     loadComponent: () => import('./home/home.component'),
   },
-  // {
-  //   path: 'edit-images/:path',
-  //   redirectTo: () => import('/edit-images/edit-images.component'),
-  //   title: 'Edit Images', // to be handled by resoler
-  //   data: {
-  //     templateKey: 'glassBottleSouvenirTemplateId'  // to be handled by resoler
-  //   }
-  // },
+  {
+    path: 'edit-image/:path',
+    loadComponent: () => import('./edit-image/edit-image.component'),
+    title: 'Edit Images', // to be handled by a resolver
+    data: {
+      templateKey: 'glassBottleSouvenirTemplateId', // to be handled by a resolver
+    },
+  },
   // {
   //   path: 'country-form',
   //   loadComponent: () => import('/country-form/country-form.component'),
