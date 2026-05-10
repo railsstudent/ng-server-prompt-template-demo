@@ -1,9 +1,9 @@
 import { TestBed } from '@angular/core/testing';
-import { ServerTemplateService } from './server-template.service';
+import { ServerPromptService } from './server-prompt.service';
 import { SERVER_TEMPLATE_MODEL } from '../constants/server-template-model.token';
 
 describe('ServerTemplateService', () => {
-  let service: ServerTemplateService;
+  let service: ServerPromptService;
   let mockModel: any;
 
   beforeEach(() => {
@@ -18,7 +18,7 @@ describe('ServerTemplateService', () => {
     TestBed.configureTestingModule({
       providers: [{ provide: SERVER_TEMPLATE_MODEL, useValue: mockModel }],
     });
-    service = TestBed.inject(ServerTemplateService);
+    service = TestBed.inject(ServerPromptService);
   });
 
   it('should be created', () => {

@@ -5,7 +5,7 @@ import { SERVER_TEMPLATE_MODEL } from '../constants/server-template-model.token'
 @Injectable({
   providedIn: 'root',
 })
-export class ServerTemplateService {
+export class ServerPromptService {
   #model = inject(SERVER_TEMPLATE_MODEL);
 
   async generateContent(templateId: string, params: Record<string, unknown>): Promise<string> {

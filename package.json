@@ -11,7 +11,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
-    "format": "prettier --write .",
+    "format": "prettier --write \"**/*.{js,ts}\"",
     "prepare": "husky",
     "commitlint": "commitlint --edit",
     "firebase:remoteconfig": "node scripts/download-remote-config.js",

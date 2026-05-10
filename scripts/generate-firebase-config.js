@@ -6,10 +6,10 @@ const envPath = path.resolve(process.cwd(), '.env');
 
 // Check if .env exists before attempting to load it
 if (fs.existsSync(envPath)) {
-    // Requires Node.js 20.6.0+ / 22+ / 24+
-    process.loadEnvFile(envPath);
+  // Requires Node.js 20.6.0+ / 22+ / 24+
+  process.loadEnvFile(envPath);
 } else {
-    console.warn('⚠️  No .env file found. Falling back to system environment variables.');
+  console.warn('⚠️  No .env file found. Falling back to system environment variables.');
 }
 
 const config = {
@@ -21,12 +21,14 @@ const config = {
   appId: process.env.FIREBASE_APP_ID,
   measurementId: process.env.FIREBASE_MEASUREMENT_ID,
   recaptchaEnterpriseKey: process.env.RECAPTCHA_ENTERPRISE_KEY,
-  vertexLocation: process.env.FIREBASE_VERTEX_LOCATION
+  vertexLocation: process.env.FIREBASE_VERTEX_LOCATION,
 };
 
 // Validate that critical variables are present (optional but recommended)
 if (!config.apiKey || !config.projectId) {
-    console.warn('⚠️  Missing critical Firebase configuration in environment variables. You will need to define them in .env before running the application.');
+  console.warn(
+    '⚠️  Missing critical Firebase configuration in environment variables. You will need to define them in .env before running the application.',
+  );
 }
 
 const targetPath = path.resolve(process.cwd(), 'src/firebase.config.json');

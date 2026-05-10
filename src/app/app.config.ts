@@ -9,7 +9,7 @@ import { provideRouter } from '@angular/router';
 
 import { provideAIModels } from './ai/ai-models.provider';
 import { ConfigService } from './ai/services/config.service';
-import { RemoteConfigService } from './ai/services/remoteConfig.service';
+import { TemplateConfigService } from './ai/services/template-config.service';
 import { routes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
@@ -19,9 +19,8 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideAppInitializer(async () => {
       const configService = inject(ConfigService);
-      const remoteConfigService = inject(RemoteConfigService);
+      const remoteConfigService = inject(TemplateConfigService);
       await configService.initialize();
-      console.log('remoteConfig', configService.remoteConfig);
       remoteConfigService.updateTemplateIds(configService.remoteConfig);
     }),
     provideAIModels(),

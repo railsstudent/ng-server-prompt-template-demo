@@ -11,7 +11,7 @@ try {
   // Execute firebase CLI command to get the template
   const stdout = execSync(`firebase remoteconfig:get --project ${PROJECT_ID} --json`, {
     encoding: 'utf8',
-    stdio: ['ignore', 'pipe', 'inherit']
+    stdio: ['ignore', 'pipe', 'inherit'],
   });
 
   const response = JSON.parse(stdout);
