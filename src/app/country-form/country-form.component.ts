@@ -7,13 +7,13 @@ import { ChangeDetectionStrategy, Component, computed, inject, input, signal } f
 import { FileUploaderComponent } from '../ui/file-uploader/file-uploader.component';
 
 @Component({
-  selector: 'app-edit-image',
+  selector: 'app-country-form',
   imports: [FileUploaderComponent],
-  templateUrl: './edit-image.component.html',
-  styleUrl: './edit-image.component.css',
+  templateUrl: './country-form.component.html',
+  styleUrl: './country-form.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export default class EditImageComponent {
+export default class CountryFormComponent {
   pageTitleTemplateKeyId = input.required<PageTitleTemplateKeyId>();
 
   inlineData = signal('');
@@ -23,9 +23,6 @@ export default class EditImageComponent {
   templateKeyId = computed(() => this.pageTitleTemplateKeyId().templateKeyId);
   pageTitle = computed(() => this.pageTitleTemplateKeyId().pageTitle);
   hasUrl = computed(() => this.inlineData().length > 0);
-  hasRequiredData = computed(
-    () => !!this.templateKeyId() && !!this.mimeType() && !!this.inlineData(),
-  );
 
   #serverPromptService = inject(ServerPromptService);
   #globalStateService = inject(GlobalStateService);
@@ -41,7 +38,7 @@ export default class EditImageComponent {
 
   async generateImage(event$: Event) {
     event$.preventDefault();
-    if (this.hasRequiredData()) {
+    if (this.templateKeyId() && this.mimeType() && this.inlineData()) {
       try {
         this.#globalStateService.isError.set(false);
         this.#globalStateService.errorMsg.set('');

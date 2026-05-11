@@ -61,7 +61,7 @@ export class NavService {
     {
       id: 5,
       label: 'Flags',
-      path: '/country-form/flags',
+      path: '/country-form',
       iconComponent: FlagIconComponent,
       title: 'Country',
       pageTitle: 'Learn about this country',

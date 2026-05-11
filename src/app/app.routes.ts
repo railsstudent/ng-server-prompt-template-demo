@@ -18,13 +18,17 @@ export const routes: Routes = [
       pageTitleTemplateKeyId: editePageTitleTemplateKeyIdResolver,
     },
   },
-  // {
-  //   path: 'country-form',
-  //   loadComponent: () => import('/country-form/country-form.component'),
-  // },
+  {
+    path: 'country-form',
+    loadComponent: () => import('./country-form/country-form.component'),
+    title: editeRouteTitleResolver,
+    resolve: {
+      pageTitleTemplateKeyId: editePageTitleTemplateKeyIdResolver,
+    },
+  },
   // {
   //   path: 'historic-event-form',
-  //   loadComponent: () => import('/historic-event-form/historic-event-form.component'),
+  //   loadComponent: () => import('./historic-event-form/historic-event-form.component'),
   // },
   {
     path: '',
