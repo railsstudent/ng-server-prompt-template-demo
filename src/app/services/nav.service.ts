@@ -37,7 +37,7 @@ export class NavService {
       path: '/edit-image/figurine',
       iconComponent: FigurineIconComponent,
       title: 'Figurine',
-      pageTitle: 'Generate a Japanese-styled figurine',
+      pageTitle: 'Generate a Japanese-styled Figurine',
       templateKeyId: 'figurineTemplateId',
     },
     {

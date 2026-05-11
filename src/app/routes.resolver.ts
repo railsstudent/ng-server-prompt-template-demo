@@ -1,7 +1,7 @@
 import { inject } from '@angular/core';
 import { ResolveFn, RouterStateSnapshot } from '@angular/router';
-import { TemplateKey } from './ai/types/template-key.type';
 import { NavService } from './services/nav.service';
+import { PageTitleTemplateKeyId } from './types/page-title-template-keyid.type';
 
 function findNavItemByPath(url: string) {
   const navService = inject(NavService);
@@ -15,15 +15,13 @@ export const editeRouteTitleResolver: ResolveFn<string> = (_, state: RouterState
   return !item ? 'Edit An Image' : item.title;
 };
 
-export const editePageTitleResolver: ResolveFn<string> = (_, state: RouterStateSnapshot) => {
-  const item = findNavItemByPath(state.url);
-  return !item ? 'Edit An Image' : item.pageTitle;
-};
-
-export const getTemplateKeyIdResolver: ResolveFn<TemplateKey | undefined> = (
+export const editePageTitleTemplateKeyIdResolver: ResolveFn<PageTitleTemplateKeyId> = (
   _,
   state: RouterStateSnapshot,
 ) => {
   const item = findNavItemByPath(state.url);
-  return item ? item.templateKeyId : undefined;
+  return {
+    pageTitle: item?.pageTitle || 'Edit An Image',
+    templateKeyId: item?.templateKeyId,
+  };
 };

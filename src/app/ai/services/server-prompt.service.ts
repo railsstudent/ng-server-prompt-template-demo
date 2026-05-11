@@ -1,14 +1,21 @@
 import { inject, Injectable } from '@angular/core';
 import { FinishReason } from 'firebase/ai';
 import { SERVER_TEMPLATE_MODEL } from '../constants/server-template-model.token';
+import { TemplateKey } from '../types/template-key.type';
+import { TemplateConfigService } from './template-config.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ServerPromptService {
   #model = inject(SERVER_TEMPLATE_MODEL);
+  #templateConfigService = inject(TemplateConfigService);
 
-  async generateContent(templateId: string, params: Record<string, unknown>): Promise<string> {
+  async generateContent(
+    templateKey: TemplateKey,
+    params: Record<string, unknown>,
+  ): Promise<string> {
+    const templateId = this.#templateConfigService.getTemplateValue(templateKey);
     const result = await this.#model.generateContent(templateId, params);
 
     const candidates = result.response.candidates || [];

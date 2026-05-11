@@ -16,15 +16,10 @@ export class TemplateConfigService {
     figurineTemplateId: '',
   });
 
-  templates = this.#templates.asReadonly();
-
   destroyRef$ = inject(DestroyRef);
 
-  getTemplateValue(key: TemplateKey) {
-    if (key in this.#templates()) {
-      return this.#templates()[key];
-    }
-    return undefined;
+  getTemplateValue(key: TemplateKey): string {
+    return this.#templates()[key] || '';
   }
 
   updateTemplateIds(remoteConfig: RemoteConfig) {

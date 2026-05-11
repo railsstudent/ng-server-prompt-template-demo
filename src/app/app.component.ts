@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ConfigService } from './ai/services/config.service';
 import { TemplateConfigService } from './ai/services/template-config.service';
@@ -10,7 +10,7 @@ import { SideNavComponent } from './ui/side-nav/side-nav.component';
   selector: 'app-root',
   imports: [RouterOutlet, FooterComponent, SideNavComponent, HeaderComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {
   configService = inject(ConfigService);

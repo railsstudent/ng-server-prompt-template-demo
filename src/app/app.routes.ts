@@ -1,9 +1,5 @@
 import { Routes } from '@angular/router';
-import {
-  editePageTitleResolver,
-  editeRouteTitleResolver,
-  getTemplateKeyIdResolver,
-} from './routes.resolver';
+import { editePageTitleTemplateKeyIdResolver, editeRouteTitleResolver } from './routes.resolver';
 
 export const routes: Routes = [
   {
@@ -19,8 +15,7 @@ export const routes: Routes = [
     loadComponent: () => import('./edit-image/edit-image.component'),
     title: editeRouteTitleResolver,
     resolve: {
-      pageTitle: editePageTitleResolver,
-      templateKey: getTemplateKeyIdResolver,
+      pageTitleTemplateKeyId: editePageTitleTemplateKeyIdResolver,
     },
   },
   // {

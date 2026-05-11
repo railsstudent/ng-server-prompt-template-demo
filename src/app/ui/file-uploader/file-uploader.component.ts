@@ -78,6 +78,17 @@ export class FileUploaderComponent {
     return true;
   }
 
+  private parseBase64String(data?: string) {
+    // 1. Split the string into two parts at the comma
+    const [header = '', inlineData = ''] = data?.split(',') || [];
+    // 2. Extract the MIME type from the header
+    // Header looks like: "data:image/png;base64"
+    // We want to remove "data:" and ";base64" to just get "image/png"
+    const mimeType = header.split(':')[1].split(';')[0];
+
+    return { mimeType, inlineData };
+  }
+
   private processFile(file: File) {
     this.currentReader?.abort();
     this.uploadProgress.set(0);
@@ -94,7 +105,8 @@ export class FileUploaderComponent {
     this.currentReader.onload = () => {
       this.previewUrl.set(this.currentReader?.result as string);
       this.uploadProgress.set(null);
-      this.fileChanged.emit({ file, url: this.previewUrl() || '' });
+      const base64Parts = this.parseBase64String(this.previewUrl());
+      this.fileChanged.emit({ file, ...base64Parts });
     };
 
     this.currentReader.onerror = () => {
