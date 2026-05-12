@@ -1,10 +1,10 @@
 import { ServerPromptService } from '@/ai/services/server-prompt.service';
 import { TemplateKey } from '@/ai/types/template-key.type';
 import { PageTitleTemplateKeyId } from '@/types/page-title-template-keyid.type';
+import { FileUploaderComponent } from '@/ui/file-uploader/file-uploader.component';
 import { GlobalStateService } from '@/ui/services/global-state.service';
 import { FileUpload } from '@/ui/types/file-upload.type';
 import { ChangeDetectionStrategy, Component, computed, inject, input, signal } from '@angular/core';
-import { FileUploaderComponent } from '../ui/file-uploader/file-uploader.component';
 
 @Component({
   selector: 'app-edit-image',
@@ -20,11 +20,9 @@ export default class EditImageComponent {
   mimeType = signal('');
   newImage = signal('');
 
-  templateKeyId = computed(() => this.pageTitleTemplateKeyId().templateKeyId);
   pageTitle = computed(() => this.pageTitleTemplateKeyId().pageTitle);
-  hasUrl = computed(() => this.inlineData().length > 0);
   hasRequiredData = computed(
-    () => !!this.templateKeyId() && !!this.mimeType() && !!this.inlineData(),
+    () => !!this.pageTitleTemplateKeyId().templateKeyId && !!this.mimeType() && !!this.inlineData(),
   );
 
   #serverPromptService = inject(ServerPromptService);
@@ -55,7 +53,7 @@ export default class EditImageComponent {
           },
         ];
         const result = await await this.#serverPromptService.generateContent(
-          this.templateKeyId() as TemplateKey,
+          this.pageTitleTemplateKeyId().templateKeyId as TemplateKey,
           {
             inlineImages,
           },

@@ -1,8 +1,19 @@
 <div class="country-form-card">
   <h2 class="country-form-title">{{ pageTitle() }}</h2>
   <div class="w-full max-w-xl mx-auto">
-    <app-file-uploader (fileChanged)="onFileChanged($event)" />
-    <button [disabled]="!hasUrl() || isLoading()" (click)="generateImage($event)">Generate</button>
+    <form novalidate>
+      <label for="country">
+        <span>Country:</span>
+        <input id="country" type="text" [formField]="countryForm.country" />
+      </label>
+      @if ((countryForm.country().touched() || countryForm.country().dirty()) && countryForm.country().invalid()) {
+        @let countryErrors = countryForm.country().errors();
+        @for (e of countryErrors; track $index) {
+          <p>{{ e.message }}</p>
+        }
+      }
+    </form>
+    <button [disabled]="isLoading() || !hasRequiredData()" (click)="generateImage($event)">Generate</button>
   </div>
   <div>
     @if (isLoading()) {

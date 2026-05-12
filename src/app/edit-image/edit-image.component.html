@@ -2,7 +2,7 @@
   <h2 class="edit-image-title">{{ pageTitle() }}</h2>
   <div class="w-full max-w-xl mx-auto">
     <app-file-uploader (fileChanged)="onFileChanged($event)" />
-    <button [disabled]="!hasUrl() || isLoading()" (click)="generateImage($event)">Generate</button>
+    <button [disabled]="!hasRequiredData() || isLoading()" (click)="generateImage($event)">Generate</button>
   </div>
   <div>
     @if (isLoading()) {
