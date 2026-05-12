@@ -1,5 +1,5 @@
+import { GlobalStateService } from '@/shared/services/global-state.service';
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
-import { GlobalStateService } from '../services/global-state.service';
 
 @Component({
   selector: 'app-error',

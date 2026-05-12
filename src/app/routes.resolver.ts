@@ -1,7 +1,7 @@
+import { NavService } from '@/core/services/nav.service';
+import { PageTitleTemplateKeyId } from '@/shared/types/page-title-template-keyid.type';
 import { inject } from '@angular/core';
 import { ResolveFn, RouterStateSnapshot } from '@angular/router';
-import { NavService } from './services/nav.service';
-import { PageTitleTemplateKeyId } from './types/page-title-template-keyid.type';
 
 function findNavItemByPath(url: string) {
   const navService = inject(NavService);

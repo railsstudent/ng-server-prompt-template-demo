@@ -1,3 +1,7 @@
+import { GlobalStateService } from '@/shared/services/global-state.service';
+import { FileUpload } from '@/shared/types/file-upload.type';
+import { TrashIconComponent } from '@/shared/ui/icons/trash-icon.component';
+import { UploadIconComponent } from '@/shared/ui/icons/upload-icon.component';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -10,10 +14,6 @@ import {
   signal,
   viewChild,
 } from '@angular/core';
-import { FileUpload } from '../../types/file-upload.type';
-import { TrashIconComponent } from '../icons/trash-icon.component';
-import { UploadIconComponent } from '../icons/upload-icon.component';
-import { GlobalStateService } from '../services/global-state.service';
 
 const KILOBYTES = 1024;
 const MAX_MBS = 20;

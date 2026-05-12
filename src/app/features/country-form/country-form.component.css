@@ -1,4 +1,4 @@
-@reference "../../styles.css";
+@reference "../../../styles.css";
 
 .country-form-card {
   @apply bg-white rounded-lg shadow p-6 border border-indigo-100;

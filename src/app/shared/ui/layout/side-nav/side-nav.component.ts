@@ -1,4 +1,4 @@
-import { NavService } from '@/services/nav.service';
+import { NavService } from '@/core/services/nav.service';
 import { NgComponentOutlet } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';

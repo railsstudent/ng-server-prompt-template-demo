@@ -14,11 +14,11 @@ import {
   withViewTransitions,
 } from '@angular/router';
 
-import { provideAIModels } from './ai/ai-models.provider';
-import { ConfigService } from './ai/services/config.service';
-import { TemplateConfigService } from './ai/services/template-config.service';
+import { provideAIModels } from './features/ai/ai-models.provider';
+import { ConfigService } from './features/ai/services/config.service';
+import { TemplateConfigService } from './features/ai/services/template-config.service';
 import { routes } from './app.routes';
-import { GlobalStateService } from './shared/ui/services/global-state.service';
+import { GlobalStateService } from './shared/services/global-state.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [

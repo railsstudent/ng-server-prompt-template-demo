@@ -1,13 +1,13 @@
-@reference "../../styles.css";
+@reference "../../../styles.css";
 
-.home-card {
+.edit-image-card {
   @apply bg-white rounded-lg shadow p-6 border border-indigo-100;
 }
 
-.home-title {
+.edit-image-title {
   @apply text-2xl font-bold text-indigo-500 mb-4;
 }
 
-.home-text {
+.edit-image-text {
   @apply text-gray-700;
 }

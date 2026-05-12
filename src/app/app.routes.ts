@@ -8,11 +8,11 @@ export const routes: Routes = [
   },
   {
     path: 'home',
-    loadComponent: () => import('./home/home.component'),
+    loadComponent: () => import('./features/home/home.component'),
   },
   {
     path: 'edit-image/:path',
-    loadComponent: () => import('./edit-image/edit-image.component'),
+    loadComponent: () => import('./features/edit-image/edit-image.component'),
     title: editeRouteTitleResolver,
     resolve: {
       pageTitleTemplateKeyId: editePageTitleTemplateKeyIdResolver,
@@ -20,7 +20,7 @@ export const routes: Routes = [
   },
   {
     path: 'country-form',
-    loadComponent: () => import('./country-form/country-form.component'),
+    loadComponent: () => import('./features/country-form/country-form.component'),
     title: editeRouteTitleResolver,
     resolve: {
       pageTitleTemplateKeyId: editePageTitleTemplateKeyIdResolver,

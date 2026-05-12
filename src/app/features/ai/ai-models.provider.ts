@@ -1,8 +1,8 @@
-import { EnvironmentProviders, makeEnvironmentProviders, inject } from '@angular/core';
+import firebaseConfig from '@/firebase.config.json';
+import { EnvironmentProviders, inject, makeEnvironmentProviders } from '@angular/core';
 import { getAI, getTemplateGenerativeModel, VertexAIBackend } from 'firebase/ai';
-import { ConfigService } from './services/config.service';
 import { SERVER_TEMPLATE_MODEL } from './constants/server-template-model.token';
-import firebaseConfig from '../../firebase.config.json';
+import { ConfigService } from './services/config.service';
 
 // 2. Create the Provider Function
 export function provideAIModels(): EnvironmentProviders {

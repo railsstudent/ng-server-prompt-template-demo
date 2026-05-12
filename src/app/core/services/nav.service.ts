@@ -1,4 +1,4 @@
-import { NavItem } from '@/types/nav-item.type';
+import { NavItem } from '@/shared/types/nav-item.type';
 import { BottleIconComponent } from '@/shared/ui/icons/bottle-icon.component';
 import { CarIconComponent } from '@/shared/ui/icons/car-icon.component';
 import { FigurineIconComponent } from '@/shared/ui/icons/figurine-icon.component';

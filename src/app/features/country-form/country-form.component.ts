@@ -1,28 +1,33 @@
-import { ServerPromptService } from '@/ai/services/server-prompt.service';
-import { TemplateKey } from '@/ai/types/template-key.type';
-import { FileUpload } from '@/shared/types/file-upload.type';
-import { FileUploaderComponent } from '@/shared/ui/file-uploader/file-uploader.component';
-import { GlobalStateService } from '@/shared/ui/services/global-state.service';
-import { PageTitleTemplateKeyId } from '@/types/page-title-template-keyid.type';
+import { ServerPromptService } from '@/features/ai/services/server-prompt.service';
+import { TemplateKey } from '@/features/ai/types/template-key.type';
+import { GlobalStateService } from '@/shared/services/global-state.service';
+import { PageTitleTemplateKeyId } from '@/shared/types/page-title-template-keyid.type';
 import { ChangeDetectionStrategy, Component, computed, inject, input, signal } from '@angular/core';
+import { debounce, form, FormField, minLength, required } from '@angular/forms/signals';
 
 @Component({
-  selector: 'app-edit-image',
-  imports: [FileUploaderComponent],
-  templateUrl: './edit-image.component.html',
-  styleUrl: './edit-image.component.css',
+  selector: 'app-country-form',
+  imports: [FormField],
+  templateUrl: './country-form.component.html',
+  styleUrl: './country-form.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export default class EditImageComponent {
+export default class CountryFormComponent {
   pageTitleTemplateKeyId = input.required<PageTitleTemplateKeyId>();
+  countryModel = signal<{ country: string }>({
+    country: '',
+  });
+  countryForm = form(this.countryModel, (schemaPath) => {
+    required(schemaPath.country, { message: 'Country is required' });
+    minLength(schemaPath.country, 2, { message: 'Country must be at least 2 characters long' });
+    debounce(schemaPath.country, 300);
+  });
 
-  inlineData = signal('');
-  mimeType = signal('');
   newImage = signal('');
-
   pageTitle = computed(() => this.pageTitleTemplateKeyId().pageTitle);
+  hasFormData = computed(() => this.countryModel().country.trim().length > 0);
   hasRequiredData = computed(
-    () => !!this.pageTitleTemplateKeyId().templateKeyId && !!this.mimeType() && !!this.inlineData(),
+    () => !!this.pageTitleTemplateKeyId().templateKeyId && this.hasFormData(),
   );
 
   #serverPromptService = inject(ServerPromptService);
@@ -31,11 +36,6 @@ export default class EditImageComponent {
   isLoading = this.#globalStateService.isLoading.asReadonly();
   isError = this.#globalStateService.isError.asReadonly();
   errorMsg = computed(() => this.#globalStateService.errorMsg() || 'Unknown Error');
-
-  onFileChanged(file: FileUpload | undefined) {
-    this.inlineData.set(file?.inlineData || '');
-    this.mimeType.set(file?.mimeType || '');
-  }
 
   async generateImage(event$: Event) {
     event$.preventDefault();
@@ -46,16 +46,10 @@ export default class EditImageComponent {
         this.#globalStateService.isLoading.set(true);
         this.newImage.set('');
 
-        const inlineImages = [
-          {
-            data: this.inlineData(),
-            mimeType: this.mimeType(),
-          },
-        ];
         const result = await await this.#serverPromptService.generateContent(
           this.pageTitleTemplateKeyId().templateKeyId as TemplateKey,
           {
-            inlineImages,
+            country: this.countryModel().country,
           },
         );
         this.newImage.set(result);

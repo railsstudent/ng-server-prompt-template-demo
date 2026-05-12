@@ -1,4 +1,4 @@
-import { TemplateKey } from '@/ai/types/template-key.type';
+import { TemplateKey } from '@/features/ai/types/template-key.type';
 import { Type } from '@angular/core';
 
 export interface NavItem {

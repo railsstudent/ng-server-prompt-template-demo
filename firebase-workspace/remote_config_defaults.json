@@ -1,8 +1,8 @@
 {
-  "countryTemplateId": "country-travel-guide-v0-0-1",
+  "threeDimentionsMapTemplateId": "three-dimentional-map-v0-0-1",
   "diecastVehicleTemplateId": "diecast-vehicle-v0-0-1",
   "historicEventTemplateId": "historic-event-v0-0-1",
   "glassBottleSouvenirTemplateId": "glass-bottle-souvenir-v0-0-1",
-  "threeDimentionsMapTemplateId": "3d-map-v0-0-1",
+  "countryTemplateId": "country-travel-guide-v0-0-1",
   "figurineTemplateId": "figurine-v0-0-1"
 }
