@@ -19,7 +19,8 @@
       "@/shared-libs/*": ["./shared-libs/*"],
       "@/firebase-workspace/*": ["./firebase-workspace/*"],
       "@/firebase.config.json": ["./src/firebase.config.json"],
-      "@/*": ["./src/app/*"]
+      "@/*": ["./src/app/*"],
+      "@/style.css": ["./src/style.css"]
     }
   },
   "angularCompilerOptions": {

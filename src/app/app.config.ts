@@ -18,7 +18,7 @@ import { provideAIModels } from './ai/ai-models.provider';
 import { ConfigService } from './ai/services/config.service';
 import { TemplateConfigService } from './ai/services/template-config.service';
 import { routes } from './app.routes';
-import { GlobalStateService } from './ui/services/global-state.service';
+import { GlobalStateService } from './shared/ui/services/global-state.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [

@@ -1,11 +1,11 @@
 import { NavItem } from '@/types/nav-item.type';
-import { BottleIconComponent } from '@/ui/icons/bottle-icon.component';
-import { CarIconComponent } from '@/ui/icons/car-icon.component';
-import { FigurineIconComponent } from '@/ui/icons/figurine-icon.component';
-import { FlagIconComponent } from '@/ui/icons/flag-icon.component';
-import { HistoryIconComponent } from '@/ui/icons/history-icon.component';
-import { HomeIconComponent } from '@/ui/icons/home-icon.component';
-import { MapIconComponent } from '@/ui/icons/map-icon.component';
+import { BottleIconComponent } from '@/shared/ui/icons/bottle-icon.component';
+import { CarIconComponent } from '@/shared/ui/icons/car-icon.component';
+import { FigurineIconComponent } from '@/shared/ui/icons/figurine-icon.component';
+import { FlagIconComponent } from '@/shared/ui/icons/flag-icon.component';
+import { HistoryIconComponent } from '@/shared/ui/icons/history-icon.component';
+import { HomeIconComponent } from '@/shared/ui/icons/home-icon.component';
+import { MapIconComponent } from '@/shared/ui/icons/map-icon.component';
 import { Injectable } from '@angular/core';
 
 @Injectable({

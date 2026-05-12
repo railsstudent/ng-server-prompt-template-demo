@@ -2,9 +2,9 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ConfigService } from './ai/services/config.service';
 import { TemplateConfigService } from './ai/services/template-config.service';
-import { FooterComponent } from './ui/footer/footer.component';
-import { HeaderComponent } from './ui/header/header.component';
-import { SideNavComponent } from './ui/side-nav/side-nav.component';
+import { FooterComponent } from './shared/ui/layout/footer/footer.component';
+import { HeaderComponent } from './shared/ui/layout/header/header.component';
+import { SideNavComponent } from './shared/ui/layout/side-nav/side-nav.component';
 
 @Component({
   selector: 'app-root',

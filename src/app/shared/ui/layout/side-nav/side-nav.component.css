@@ -1,4 +1,4 @@
-@reference "../../../styles.css";
+@reference "../../../../../styles.css";
 
 :host {
   @apply flex flex-col h-full bg-indigo-800 text-white shadow-md transition-all duration-300 w-16 hover:w-64 overflow-hidden whitespace-nowrap;

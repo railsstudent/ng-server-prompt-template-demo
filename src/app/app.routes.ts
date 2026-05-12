@@ -4,7 +4,7 @@ import { editePageTitleTemplateKeyIdResolver, editeRouteTitleResolver } from './
 export const routes: Routes = [
   {
     path: 'error',
-    loadComponent: () => import('./ui/error/error.component'),
+    loadComponent: () => import('./shared/ui/error/error.component'),
   },
   {
     path: 'home',

@@ -1,7 +1,7 @@
 import { ServerPromptService } from '@/ai/services/server-prompt.service';
 import { TemplateKey } from '@/ai/types/template-key.type';
 import { PageTitleTemplateKeyId } from '@/types/page-title-template-keyid.type';
-import { GlobalStateService } from '@/ui/services/global-state.service';
+import { GlobalStateService } from '@/shared/ui/services/global-state.service';
 import { ChangeDetectionStrategy, Component, computed, inject, input, signal } from '@angular/core';
 import { debounce, form, FormField, minLength, required } from '@angular/forms/signals';
 
