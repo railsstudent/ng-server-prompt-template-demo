@@ -3,15 +3,17 @@ import {
   Component,
   computed,
   DestroyRef,
+  ElementRef,
   inject,
   input,
   output,
   signal,
+  viewChild,
 } from '@angular/core';
+import { FileUpload } from '../../types/file-upload.type';
 import { TrashIconComponent } from '../icons/trash-icon.component';
 import { UploadIconComponent } from '../icons/upload-icon.component';
 import { GlobalStateService } from '../services/global-state.service';
-import { FileUpload } from '../types/file-upload.type';
 
 const KILOBYTES = 1024;
 const MAX_MBS = 20;
@@ -26,6 +28,8 @@ const MAX_MBS = 20;
 export class FileUploaderComponent {
   private stateService = inject(GlobalStateService);
   private destroyRef = inject(DestroyRef);
+
+  private readonly fileInput = viewChild.required<ElementRef<HTMLInputElement>>('fileInput');
 
   maxSize = input(MAX_MBS * KILOBYTES * KILOBYTES);
   fileChanged = output<FileUpload | undefined>();
@@ -164,5 +168,7 @@ export class FileUploaderComponent {
     this.fileChanged.emit(undefined);
     this.stateService.isError.set(false);
     this.stateService.errorMsg.set('');
+    this.stateService.isLoading.set(false);
+    this.fileInput().nativeElement.value = '';
   }
 }

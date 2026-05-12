@@ -1,9 +1,9 @@
 import { ServerPromptService } from '@/ai/services/server-prompt.service';
 import { TemplateKey } from '@/ai/types/template-key.type';
-import { PageTitleTemplateKeyId } from '@/types/page-title-template-keyid.type';
+import { FileUpload } from '@/shared/types/file-upload.type';
 import { FileUploaderComponent } from '@/shared/ui/file-uploader/file-uploader.component';
 import { GlobalStateService } from '@/shared/ui/services/global-state.service';
-import { FileUpload } from '@/shared/ui/types/file-upload.type';
+import { PageTitleTemplateKeyId } from '@/types/page-title-template-keyid.type';
 import { ChangeDetectionStrategy, Component, computed, inject, input, signal } from '@angular/core';
 
 @Component({
