@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const PROJECT_ID = 'vertexai-prompt-templates';
-const OUTPUT_FILE = path.join(__dirname, '../firebase-workspace/remote_config_defaults.json');
+const OUTPUT_FILE = path.join(__dirname, '../remote_config_defaults.json');
 
 try {
   console.log(`Fetching Remote Config template for project: ${PROJECT_ID}...`);

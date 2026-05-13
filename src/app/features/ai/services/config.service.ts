@@ -1,4 +1,4 @@
-import rcDefaults from '@/firebase-workspace/remote_config_defaults.json';
+import rcDefaults from '@/firebase/remote_config_defaults.json';
 import firebaseConfig from '@/firebase.config.json';
 import { Injectable, isDevMode } from '@angular/core';
 import { FirebaseApp, initializeApp } from 'firebase/app';
