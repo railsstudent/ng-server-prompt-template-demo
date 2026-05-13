@@ -1,28 +1,40 @@
 import { ServerPromptService } from '@/features/ai/services/server-prompt.service';
 import { TemplateKey } from '@/features/ai/types/template-key.type';
 import { GlobalStateService } from '@/shared/services/global-state.service';
-import { FileUpload } from '@/shared/types/file-upload.type';
 import { PageTitleTemplateKeyId } from '@/shared/types/page-title-template-keyid.type';
-import { FileUploaderComponent } from '@/shared/ui/file-uploader/file-uploader.component';
 import { ChangeDetectionStrategy, Component, computed, inject, input, signal } from '@angular/core';
+import { debounce, form, FormField, minLength, required } from '@angular/forms/signals';
 
 @Component({
-  selector: 'app-edit-image',
-  imports: [FileUploaderComponent],
-  templateUrl: './edit-image.component.html',
-  styleUrl: './edit-image.component.css',
+  selector: 'app-historic-event-form',
+  imports: [FormField],
+  templateUrl: './historic-event-form.component.html',
+  styleUrl: './historic-event-form.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export default class EditImageComponent {
+export default class HistoricFormComponent {
   pageTitleTemplateKeyId = input.required<PageTitleTemplateKeyId>();
+  countryModel = signal<{ event: string; description: string }>({
+    event: '',
+    description: '',
+  });
+  countryForm = form(this.countryModel, (schemaPath) => {
+    required(schemaPath.event, { message: 'Event is required' });
+    minLength(schemaPath.event, 2, { message: 'Event must be at least 2 characters long' });
+    debounce(schemaPath.event, 300);
 
-  inlineData = signal('');
-  mimeType = signal('');
+    required(schemaPath.description, { message: 'Description is required' });
+    minLength(schemaPath.description, 2, {
+      message: 'Description must be at least 2 characters long',
+    });
+    debounce(schemaPath.description, 300);
+  });
+
   newImage = signal('');
-
   pageTitle = computed(() => this.pageTitleTemplateKeyId().pageTitle);
+  hasFormData = computed(() => this.countryModel().event.trim().length > 0);
   hasRequiredData = computed(
-    () => !!this.pageTitleTemplateKeyId().templateKeyId && !!this.mimeType() && !!this.inlineData(),
+    () => !!this.pageTitleTemplateKeyId().templateKeyId && this.hasFormData(),
   );
 
   #serverPromptService = inject(ServerPromptService);
@@ -32,11 +44,6 @@ export default class EditImageComponent {
   isError = this.#globalStateService.isError.asReadonly();
   errorMsg = computed(() => this.#globalStateService.errorMsg() || 'Unknown Error');
 
-  onFileChanged(file: FileUpload | undefined) {
-    this.inlineData.set(file?.inlineData || '');
-    this.mimeType.set(file?.mimeType || '');
-  }
-
   async generateImage(event$: Event) {
     event$.preventDefault();
     if (this.hasRequiredData()) {
@@ -44,16 +51,11 @@ export default class EditImageComponent {
         this.#globalStateService.startLoading();
         this.newImage.set('');
 
-        const inlineImages = [
-          {
-            data: this.inlineData(),
-            mimeType: this.mimeType(),
-          },
-        ];
         const result = await await this.#serverPromptService.generateContent(
           this.pageTitleTemplateKeyId().templateKeyId as TemplateKey,
           {
-            inlineImages,
+            event: this.countryModel().event,
+            description: this.countryModel().description,
           },
         );
         this.newImage.set(result);

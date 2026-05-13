@@ -26,10 +26,14 @@ export const routes: Routes = [
       pageTitleTemplateKeyId: editePageTitleTemplateKeyIdResolver,
     },
   },
-  // {
-  //   path: 'historic-event-form',
-  //   loadComponent: () => import('./historic-event-form/historic-event-form.component'),
-  // },
+  {
+    path: 'historic-event-form',
+    loadComponent: () => import('./features/historic-event-form/historic-event-form.component'),
+    title: editeRouteTitleResolver,
+    resolve: {
+      pageTitleTemplateKeyId: editePageTitleTemplateKeyIdResolver,
+    },
+  },
   {
     path: '',
     pathMatch: 'full',

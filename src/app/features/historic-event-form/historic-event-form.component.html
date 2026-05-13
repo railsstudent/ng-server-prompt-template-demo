@@ -1,0 +1,31 @@
+<div class="country-form-card">
+  <h2 class="country-form-title">{{ pageTitle() }}</h2>
+  <div class="w-full max-w-xl mx-auto">
+    <form novalidate>
+      <label for="country">
+        <span>Event:</span>
+        <input id="country" type="text" [formField]="countryForm.event" />
+      </label>
+      @if ((countryForm.event().touched() || countryForm.event().dirty()) && countryForm.event().invalid()) {
+        @let countryErrors = countryForm.event().errors();
+        @for (e of countryErrors; track $index) {
+          <p>{{ e.message }}</p>
+        }
+      }
+    </form>
+    <button [disabled]="isLoading() || !hasRequiredData()" (click)="generateImage($event)">Generate</button>
+  </div>
+  <div>
+    @if (isLoading()) {
+      <div>Loading...</div>
+    } @else if (isError()) {
+      <div>Error: {{ errorMsg() }}</div>
+    } @else {
+      @if (newImage(); as img) {
+        <img src="{{ img }}" alt="Generated Image" />
+      } @else {
+        <div>No image generated yet.</div>
+      }
+    }
+  </div>
+</div>

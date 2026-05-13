@@ -73,7 +73,7 @@ export class NavService {
       path: '/historic-event-form',
       iconComponent: HistoryIconComponent,
       title: 'History Event',
-      pageTitle: 'What happened in this historic event?',
+      pageTitle: 'Important Moment of this Historic Event',
       templateKeyId: 'historicEventTemplateId',
     },
   ];

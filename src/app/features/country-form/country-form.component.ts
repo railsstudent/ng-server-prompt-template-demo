@@ -41,9 +41,7 @@ export default class CountryFormComponent {
     event$.preventDefault();
     if (this.hasRequiredData()) {
       try {
-        this.#globalStateService.isError.set(false);
-        this.#globalStateService.errorMsg.set('');
-        this.#globalStateService.isLoading.set(true);
+        this.#globalStateService.startLoading();
         this.newImage.set('');
 
         const result = await await this.#serverPromptService.generateContent(
