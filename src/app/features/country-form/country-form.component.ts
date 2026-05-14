@@ -32,8 +32,8 @@ export default class CountryFormComponent {
   #serverPromptService = inject(ServerPromptService);
   #globalStateService = inject(GlobalStateService);
 
-  isLoading = this.#globalStateService.isLoading.asReadonly();
-  isError = this.#globalStateService.isError.asReadonly();
+  isLoading = this.#globalStateService.isLoading;
+  isError = this.#globalStateService.isError;
   errorMsg = computed(() => this.#globalStateService.errorMsg() || 'Unknown Error');
 
   async generateImage(event$: Event) {
@@ -52,10 +52,9 @@ export default class CountryFormComponent {
         this.newImage.set(result);
       } catch (e) {
         console.error(e);
-        this.#globalStateService.isError.set(true);
-        this.#globalStateService.errorMsg.set('An error occurred while generating the image.');
+        this.#globalStateService.setError('An error occurred while generating the image.');
       } finally {
-        this.#globalStateService.isLoading.set(false);
+        this.#globalStateService.stopLoading();
       }
     }
   }

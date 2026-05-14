@@ -31,7 +31,7 @@ export const appConfig: ApplicationConfig = {
       withNavigationErrorHandler((error: NavigationError) => {
         console.log('withNavigationErrorHandler triggered', 'url: ', error.url);
         const service = inject(GlobalStateService);
-        service.errorMsg.set(error.error?.['message'] || 'Unknown Navigation Error');
+        service.setError(error.error?.['message'] || 'Unknown Navigation Error');
         inject(Router).navigate(['/error'], {
           skipLocationChange: true,
         });

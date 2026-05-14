@@ -27,8 +27,8 @@ export default class EditImageComponent {
   #serverPromptService = inject(ServerPromptService);
   #globalStateService = inject(GlobalStateService);
 
-  isLoading = this.#globalStateService.isLoading.asReadonly();
-  isError = this.#globalStateService.isError.asReadonly();
+  isLoading = this.#globalStateService.isLoading;
+  isError = this.#globalStateService.isError;
   errorMsg = computed(() => this.#globalStateService.errorMsg() || 'Unknown Error');
 
   onFileChanged(file: FileUpload | undefined) {
@@ -58,10 +58,9 @@ export default class EditImageComponent {
         this.newImage.set(result);
       } catch (e) {
         console.error(e);
-        this.#globalStateService.isError.set(true);
-        this.#globalStateService.errorMsg.set('An error occurred while generating the image.');
+        this.#globalStateService.setError('An error occurred while generating the image.');
       } finally {
-        this.#globalStateService.isLoading.set(false);
+        this.#globalStateService.stopLoading();
       }
     }
   }

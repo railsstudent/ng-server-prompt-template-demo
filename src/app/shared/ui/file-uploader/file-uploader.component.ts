@@ -65,17 +65,15 @@ export class FileUploaderComponent {
     const isValidType = this.acceptedTypes.map((t) => t.toLowerCase()).includes(extension || '');
 
     if (!isValidType) {
-      this.stateService.isError.set(true);
-      this.stateService.errorMsg.set(
+      this.stateService.setError(
         `Invalid file type. Only ${this.acceptedTypes.join(', ')} are allowed.`,
       );
       return false;
     }
 
     if (file.size > this.maxSize()) {
-      this.stateService.isError.set(true);
       const mbSize = this.maxSize() / (KILOBYTES * KILOBYTES);
-      this.stateService.errorMsg.set(`File is too large. Maximum size is ${mbSize}MB.`);
+      this.stateService.setError(`File is too large. Maximum size is ${mbSize}MB.`);
       return false;
     }
 
@@ -114,8 +112,7 @@ export class FileUploaderComponent {
     };
 
     this.currentReader.onerror = () => {
-      this.stateService.isError.set(true);
-      this.stateService.errorMsg.set('An error occurred while reading the file.');
+      this.stateService.setError('An error occurred while reading the file.');
       this.uploadProgress.set(null);
     };
 
@@ -151,8 +148,7 @@ export class FileUploaderComponent {
   }
 
   private handleFileSelection(file: File) {
-    this.stateService.isError.set(false);
-    this.stateService.errorMsg.set('');
+    this.stateService.setError('');
 
     if (this.validateFile(file)) {
       this.processFile(file);
@@ -166,9 +162,8 @@ export class FileUploaderComponent {
     this.previewUrl.set(undefined);
     this.uploadProgress.set(null);
     this.fileChanged.emit(undefined);
-    this.stateService.isError.set(false);
-    this.stateService.errorMsg.set('');
-    this.stateService.isLoading.set(false);
+    this.stateService.setError('');
+    this.stateService.stopLoading();
     this.fileInput().nativeElement.value = '';
   }
 }
