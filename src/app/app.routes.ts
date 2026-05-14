@@ -1,5 +1,8 @@
 import { Routes } from '@angular/router';
-import { editePageTitleTemplateKeyIdResolver, editeRouteTitleResolver } from './routes.resolver';
+import {
+  editePageTitleTemplateKeyIdResolver,
+  editeRouteTitleResolver,
+} from './resolvers/routes.resolver';
 
 export const routes: Routes = [
   {
