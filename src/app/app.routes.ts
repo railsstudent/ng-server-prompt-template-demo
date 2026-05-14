@@ -1,8 +1,42 @@
-import { Routes } from '@angular/router';
+import { DefaultExport, Routes } from '@angular/router';
 import {
   editePageTitleTemplateKeyIdResolver,
   editeRouteTitleResolver,
 } from './resolvers/routes.resolver';
+import { Type } from '@angular/core';
+import { Observable } from 'rxjs';
+
+type LoadComponentReturnType = () =>
+  | Type<unknown>
+  | Observable<Type<unknown> | DefaultExport<Type<unknown>>>
+  | Promise<Type<unknown> | DefaultExport<Type<unknown>>>;
+
+function createResolverRoute(path: string, componentName: string) {
+  const componentLoaderMap: Record<string, LoadComponentReturnType> = {
+    'edit-image': () => import('./features/edit-image/edit-image.component'),
+    'country-form': () => import('./features/country-form/country-form.component'),
+    'historic-event-form': () =>
+      import('./features/historic-event-form/historic-event-form.component'),
+  };
+
+  const loadComponent = componentLoaderMap[componentName];
+
+  if (!loadComponent) {
+    return {
+      path,
+      redirectTo: 'error',
+    };
+  }
+
+  return {
+    path,
+    loadComponent,
+    title: editeRouteTitleResolver,
+    resolve: {
+      pageTitleTemplateKeyId: editePageTitleTemplateKeyIdResolver,
+    },
+  };
+}
 
 export const routes: Routes = [
   {
@@ -13,30 +47,9 @@ export const routes: Routes = [
     path: 'home',
     loadComponent: () => import('./features/home/home.component'),
   },
-  {
-    path: 'edit-image/:path',
-    loadComponent: () => import('./features/edit-image/edit-image.component'),
-    title: editeRouteTitleResolver,
-    resolve: {
-      pageTitleTemplateKeyId: editePageTitleTemplateKeyIdResolver,
-    },
-  },
-  {
-    path: 'country-form',
-    loadComponent: () => import('./features/country-form/country-form.component'),
-    title: editeRouteTitleResolver,
-    resolve: {
-      pageTitleTemplateKeyId: editePageTitleTemplateKeyIdResolver,
-    },
-  },
-  {
-    path: 'historic-event-form',
-    loadComponent: () => import('./features/historic-event-form/historic-event-form.component'),
-    title: editeRouteTitleResolver,
-    resolve: {
-      pageTitleTemplateKeyId: editePageTitleTemplateKeyIdResolver,
-    },
-  },
+  createResolverRoute('edit-image/:path', 'edit-image'),
+  createResolverRoute('country-form', 'country-form'),
+  createResolverRoute('historic-event-form', 'historic-event-form'),
   {
     path: '',
     pathMatch: 'full',
