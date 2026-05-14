@@ -4,8 +4,10 @@ import { GlobalStateService } from '@/shared/services/global-state.service';
 import { FooterComponent } from '@/shared/ui/layout/footer/footer.component';
 import { HeaderComponent } from '@/shared/ui/layout/header/header.component';
 import { SideNavComponent } from '@/shared/ui/layout/side-nav/side-nav.component';
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { EventType, Router, RouterOutlet } from '@angular/router';
+import { createBreadcrumb } from './shared/utils/create-breadcrumb';
 
 @Component({
   selector: 'app-root',
@@ -15,15 +17,26 @@ import { RouterOutlet } from '@angular/router';
 })
 export class AppComponent {
   configService = inject(ConfigService);
-  remoteConfigService = inject(TemplateConfigService);
+  templateConfigService = inject(TemplateConfigService);
   stateService = inject(GlobalStateService);
+  route = inject(Router);
 
   status = this.stateService.status;
+
+  // breadcrumb = computed(() => createBreadcrumb(this.route.url));
+  breadcrumb = signal('');
 
   constructor() {
     try {
       const remoteConfig = this.configService.remoteConfig;
-      this.remoteConfigService.setupRemoteConfigListener(remoteConfig);
+      this.templateConfigService.setupRemoteConfigListener(remoteConfig);
+
+      this.route.events.pipe(takeUntilDestroyed()).subscribe((event) => {
+        if (event.type === EventType.NavigationEnd) {
+          console.log(event.url);
+          this.breadcrumb.set(createBreadcrumb(event.url));
+        }
+      });
     } catch (e) {
       const errMsg =
         e instanceof Error ? e.message : 'Error occurs while setting up remote config listener';

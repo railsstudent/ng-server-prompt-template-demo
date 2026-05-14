@@ -8,5 +8,7 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent {
+  breadcrumb = input('');
+  templateId = input('');
   status = input<Status>('Idle');
 }
