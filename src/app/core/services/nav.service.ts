@@ -24,7 +24,7 @@ export class NavService {
     },
     {
       id: 1,
-      label: 'Glass Bottle Souvenir',
+      label: 'Glass Bottle',
       path: '/edit-image/glass-bottle-souvenir',
       iconComponent: BottleIconComponent,
       title: 'Glass Bottle',
@@ -60,7 +60,7 @@ export class NavService {
     },
     {
       id: 5,
-      label: 'Flags',
+      label: 'Country Guide',
       path: '/country-form',
       iconComponent: FlagIconComponent,
       title: 'Country',

@@ -1,2 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
 @import 'tailwindcss';
+
+.image-card {
+  @apply bg-white rounded-lg shadow p-6 border border-indigo-100;
+}
+
+.image-title {
+  @apply text-2xl font-bold text-indigo-500 mb-4;
+}
+
+.image-text {
+  @apply text-gray-700;
+}

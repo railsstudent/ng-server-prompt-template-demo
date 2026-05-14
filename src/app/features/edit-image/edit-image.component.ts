@@ -10,7 +10,6 @@ import { ChangeDetectionStrategy, Component, computed, inject, input, signal } f
   selector: 'app-edit-image',
   imports: [FileUploaderComponent],
   templateUrl: './edit-image.component.html',
-  styleUrl: './edit-image.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class EditImageComponent {

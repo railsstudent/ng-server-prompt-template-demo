@@ -1,14 +1,24 @@
-<div class="country-form-card">
-  <h2 class="country-form-title">{{ pageTitle() }}</h2>
+<div class="image-card">
+  <h2 class="image-title">{{ pageTitle() }}</h2>
   <div class="w-full max-w-xl mx-auto">
     <form novalidate>
-      <label for="country">
+      <label for="event">
         <span>Event:</span>
-        <input id="country" type="text" [formField]="countryForm.event" />
+        <input id="event" type="text" [formField]="historicEventForm.event" />
       </label>
-      @if ((countryForm.event().touched() || countryForm.event().dirty()) && countryForm.event().invalid()) {
-        @let countryErrors = countryForm.event().errors();
-        @for (e of countryErrors; track $index) {
+      @if ((historicEventForm.event().touched() || historicEventForm.event().dirty()) && historicEventForm.event().invalid()) {
+        @let eventErrors = historicEventForm.event().errors();
+        @for (e of eventErrors; track $index) {
+          <p>{{ e.message }}</p>
+        }
+      }
+      <label for="description">
+        <span>Description:</span>
+        <input id="description" type="text" [formField]="historicEventForm.description" />
+      </label>
+      @if ((historicEventForm.description().touched() || historicEventForm.description().dirty()) && historicEventForm.description().invalid()) {
+        @let descriptionErrors = historicEventForm.description().errors();
+        @for (e of descriptionErrors; track $index) {
           <p>{{ e.message }}</p>
         }
       }

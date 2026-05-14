@@ -9,16 +9,15 @@ import { debounce, form, FormField, minLength, required } from '@angular/forms/s
   selector: 'app-historic-event-form',
   imports: [FormField],
   templateUrl: './historic-event-form.component.html',
-  styleUrl: './historic-event-form.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class HistoricFormComponent {
   pageTitleTemplateKeyId = input.required<PageTitleTemplateKeyId>();
-  countryModel = signal<{ event: string; description: string }>({
+  historicEventModel = signal<{ event: string; description: string }>({
     event: '',
     description: '',
   });
-  countryForm = form(this.countryModel, (schemaPath) => {
+  historicEventForm = form(this.historicEventModel, (schemaPath) => {
     required(schemaPath.event, { message: 'Event is required' });
     minLength(schemaPath.event, 2, { message: 'Event must be at least 2 characters long' });
     debounce(schemaPath.event, 300);
@@ -32,7 +31,7 @@ export default class HistoricFormComponent {
 
   newImage = signal('');
   pageTitle = computed(() => this.pageTitleTemplateKeyId().pageTitle);
-  hasFormData = computed(() => this.countryModel().event.trim().length > 0);
+  hasFormData = computed(() => this.historicEventModel().event.trim().length > 0);
   hasRequiredData = computed(
     () => !!this.pageTitleTemplateKeyId().templateKeyId && this.hasFormData(),
   );
@@ -54,8 +53,8 @@ export default class HistoricFormComponent {
         const result = await await this.#serverPromptService.generateContent(
           this.pageTitleTemplateKeyId().templateKeyId as TemplateKey,
           {
-            event: this.countryModel().event,
-            description: this.countryModel().description,
+            event: this.historicEventModel().event,
+            description: this.historicEventModel().description,
           },
         );
         this.newImage.set(result);

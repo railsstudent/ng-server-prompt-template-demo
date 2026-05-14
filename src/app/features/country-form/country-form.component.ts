@@ -9,7 +9,6 @@ import { debounce, form, FormField, minLength, required } from '@angular/forms/s
   selector: 'app-country-form',
   imports: [FormField],
   templateUrl: './country-form.component.html',
-  styleUrl: './country-form.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class CountryFormComponent {

@@ -1,5 +1,5 @@
-<div class="edit-image-card">
-  <h2 class="edit-image-title">{{ pageTitle() }}</h2>
+<div class="image-card">
+  <h2 class="image-title">{{ pageTitle() }}</h2>
   <div class="w-full max-w-xl mx-auto">
     <app-file-uploader (fileChanged)="onFileChanged($event)" />
     <button [disabled]="!hasRequiredData() || isLoading()" (click)="generateImage($event)">Generate</button>
