@@ -4,7 +4,11 @@
     <form novalidate>
       <label for="country">
         <span>Country:</span>
-        <input id="country" type="text" [formField]="countryForm.country" />
+        <select [formField]="countryForm.country">
+            @for (c of countries; track c.code) {
+              <option [value]="c.name">{{ c.name }} </option>
+            }
+        </select>
       </label>
       @if ((countryForm.country().touched() || countryForm.country().dirty()) && countryForm.country().invalid()) {
         @let countryErrors = countryForm.country().errors();
@@ -15,17 +19,5 @@
     </form>
     <button [disabled]="isLoading() || !hasRequiredData()" (click)="generateImage($event)">Generate</button>
   </div>
-  <div>
-    @if (isLoading()) {
-      <div>Loading...</div>
-    } @else if (isError()) {
-      <div>Error: {{ errorMsg() }}</div>
-    } @else {
-      @if (newImage(); as img) {
-        <img src="{{ img }}" alt="Generated Image" />
-      } @else {
-        <div>No image generated yet.</div>
-      }
-    }
-  </div>
+  <app-image-display [image]="newImage()" [isLoading]="isLoading()" [isError]="isError()" [errMsg]="errorMsg()" />
 </div>

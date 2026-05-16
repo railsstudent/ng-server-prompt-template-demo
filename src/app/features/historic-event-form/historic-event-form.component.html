@@ -14,7 +14,9 @@
       }
       <label for="description">
         <span>Description:</span>
-        <input id="description" type="text" [formField]="historicEventForm.description" />
+        <textarea id="description" type="text" [formField]="historicEventForm.description"
+          rows="5"
+        ></textarea>
       </label>
       @if ((historicEventForm.description().touched() || historicEventForm.description().dirty()) && historicEventForm.description().invalid()) {
         @let descriptionErrors = historicEventForm.description().errors();
@@ -25,17 +27,5 @@
     </form>
     <button [disabled]="isLoading() || !hasRequiredData()" (click)="generateImage($event)">Generate</button>
   </div>
-  <div>
-    @if (isLoading()) {
-      <div>Loading...</div>
-    } @else if (isError()) {
-      <div>Error: {{ errorMsg() }}</div>
-    } @else {
-      @if (newImage(); as img) {
-        <img src="{{ img }}" alt="Generated Image" />
-      } @else {
-        <div>No image generated yet.</div>
-      }
-    }
-  </div>
+  <app-image-display [image]="newImage()" [isLoading]="isLoading()" [isError]="isError()" [errMsg]="errorMsg()" />
 </div>

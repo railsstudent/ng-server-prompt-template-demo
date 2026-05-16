@@ -4,17 +4,5 @@
     <app-file-uploader (fileChanged)="onFileChanged($event)" />
     <button [disabled]="!hasRequiredData() || isLoading()" (click)="generateImage($event)">Generate</button>
   </div>
-  <div>
-    @if (isLoading()) {
-      <div>Loading...</div>
-    } @else if (isError()) {
-      <div>Error: {{ errorMsg() }}</div>
-    } @else {
-      @if (newImage(); as img) {
-        <img src="{{ img }}" alt="Generated Image" />
-      } @else {
-        <div>No image generated yet.</div>
-      }
-    }
-  </div>
+  <app-image-display [image]="newImage()" [isLoading]="isLoading()" [isError]="isError()" [errMsg]="errorMsg()" />
 </div>

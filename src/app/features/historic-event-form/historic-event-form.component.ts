@@ -1,13 +1,14 @@
-import { ServerPromptService } from '@/features/ai/services/server-prompt.service';
 import { TemplateKey } from '@/features/ai/types/template-key.type';
 import { GlobalStateService } from '@/shared/services/global-state.service';
+import { ImageGenerationService } from '@/shared/services/image.service';
 import { PageTitleTemplateKeyId } from '@/shared/types/page-title-template-keyid.type';
+import ImageDisplayComponent from '@/shared/ui/image-display/image-display.component';
 import { ChangeDetectionStrategy, Component, computed, inject, input, signal } from '@angular/core';
 import { debounce, form, FormField, minLength, required } from '@angular/forms/signals';
 
 @Component({
   selector: 'app-historic-event-form',
-  imports: [FormField],
+  imports: [FormField, ImageDisplayComponent],
   templateUrl: './historic-event-form.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -36,8 +37,8 @@ export default class HistoricFormComponent {
     () => !!this.pageTitleTemplateKeyId().templateKeyId && this.hasFormData(),
   );
 
-  #serverPromptService = inject(ServerPromptService);
   #globalStateService = inject(GlobalStateService);
+  #imageGenerationService = inject(ImageGenerationService);
 
   isLoading = this.#globalStateService.isLoading;
   isError = this.#globalStateService.isError;
@@ -47,11 +48,11 @@ export default class HistoricFormComponent {
     event$.preventDefault();
     if (this.hasRequiredData()) {
       try {
-        this.#globalStateService.startLoading();
         this.newImage.set('');
-
-        const result = await await this.#serverPromptService.generateContent(
-          this.pageTitleTemplateKeyId().templateKeyId as TemplateKey,
+        const templateKey = this.pageTitleTemplateKeyId().templateKeyId as TemplateKey;
+        const result = await this.#imageGenerationService.generateImage(
+          this.hasRequiredData(),
+          templateKey,
           {
             event: this.historicEventModel().event,
             description: this.historicEventModel().description,

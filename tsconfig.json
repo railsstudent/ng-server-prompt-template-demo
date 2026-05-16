@@ -16,11 +16,10 @@
     "target": "ES2022",
     "module": "preserve",
     "paths": {
-      "@/shared-libs/*": ["./shared-libs/*"],
       "@/firebase/*": ["./firebase/*"],
       "@/firebase.config.json": ["./src/firebase.config.json"],
       "@/*": ["./src/app/*"],
-      "@/style.css": ["./src/style.css"]
+      "@/public/*": ["./public/*"]
     }
   },
   "angularCompilerOptions": {

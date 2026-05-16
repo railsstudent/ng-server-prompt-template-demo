@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/c
 
 @Component({
   selector: 'app-error',
-  templateUrl: './error.component.html',
+  template: ` <div>Error message: {{ errorMessage() }}</div>`,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class ErrorComponent {
