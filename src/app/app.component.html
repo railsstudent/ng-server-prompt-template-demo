@@ -5,7 +5,11 @@
   <!-- Main content area on the right -->
   <div class="flex flex-col flex-1 overflow-hidden">
     <!-- Header on top of main content -->
-    <app-header class="flex-shrink-0" [breadcrumb]="breadcrumb()" [status]="status()"></app-header>
+    <app-header class="flex-shrink-0"
+      [breadcrumb]="breadcrumb()"
+      [status]="status()"
+      [templateId]="templateId()"
+    ></app-header>
 
     <!-- Router outlet (Home/Main Content) -->
     <main class="flex-1 overflow-auto p-4">
