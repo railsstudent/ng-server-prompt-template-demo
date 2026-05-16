@@ -1,7 +1,6 @@
+import { ImageFacadeService } from '@/features/ai-generation/services/image-facade.service';
 import { TemplateKey } from '@/features/ai/types/template-key.type';
 import countryList from '@/public/countries.json';
-import { GlobalStateService } from '@/shared/services/global-state.service';
-import { ImageGenerationService } from '@/shared/services/image.service';
 import { PageTitleTemplateKeyId } from '@/shared/types/page-title-template-keyid.type';
 import ImageDisplayComponent from '@/shared/ui/image-display/image-display.component';
 import { ChangeDetectionStrategy, Component, computed, inject, input, signal } from '@angular/core';
@@ -26,39 +25,31 @@ export default class CountryFormComponent {
 
   newImage = signal('');
   pageTitle = computed(() => this.pageTitleTemplateKeyId().pageTitle);
-  hasFormData = computed(() => this.countryModel().country.trim().length > 0);
   hasRequiredData = computed(
-    () => !!this.pageTitleTemplateKeyId().templateKeyId && this.hasFormData(),
+    () => !!this.pageTitleTemplateKeyId().templateKeyId && !!this.countryModel().country,
   );
   countries = countryList.countries;
 
-  #globalStateService = inject(GlobalStateService);
-  #imageGenerationService = inject(ImageGenerationService);
+  #imageFacade = inject(ImageFacadeService);
 
-  isLoading = this.#globalStateService.isLoading;
-  isError = this.#globalStateService.isError;
-  errorMsg = computed(() => this.#globalStateService.errorMsg() || 'Unknown Error');
+  isLoading = this.#imageFacade.isLoading;
+  isError = this.#imageFacade.isError;
+  errorMsg = this.#imageFacade.errorMsg;
 
   async generateImage(event$: Event) {
     event$.preventDefault();
-    if (this.hasRequiredData()) {
-      try {
-        this.newImage.set('');
-        const templateKey = this.pageTitleTemplateKeyId().templateKeyId as TemplateKey;
-        const result = await this.#imageGenerationService.generateImage(
-          this.hasRequiredData(),
-          templateKey,
-          {
-            country: this.countryModel().country,
-          },
-        );
-        this.newImage.set(result);
-      } catch (e) {
-        console.error(e);
-        this.#globalStateService.setError('An error occurred while generating the image.');
-      } finally {
-        this.#globalStateService.stopLoading();
-      }
+    if (!this.hasRequiredData()) {
+      return;
     }
+
+    this.newImage.set('');
+    const result = await this.#imageFacade.generateImage(
+      this.pageTitleTemplateKeyId().templateKeyId as TemplateKey,
+      this.hasRequiredData(),
+      {
+        country: this.countryModel().country,
+      },
+    );
+    this.newImage.set(result);
   }
 }

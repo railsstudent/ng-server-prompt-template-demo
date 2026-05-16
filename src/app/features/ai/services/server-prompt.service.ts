@@ -1,22 +1,18 @@
 import { ContentMode } from '@/features/ai/types/data-mode.type';
-import { TemplateKey } from '@/features/ai/types/template-key.type';
 import { inject, Injectable } from '@angular/core';
 import { FinishReason } from 'firebase/ai';
 import { SERVER_TEMPLATE_MODEL } from '../constants/server-template-model.token';
-import { TemplateConfigService } from './template-config.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ServerPromptService {
   #model = inject(SERVER_TEMPLATE_MODEL);
-  #templateConfigService = inject(TemplateConfigService);
 
   async generateContent(
-    templateKey: TemplateKey,
+    templateId: string,
     params: Record<string, unknown>,
   ): Promise<ContentMode[]> {
-    const templateId = this.#templateConfigService.getTemplateValue(templateKey);
     const result = await this.#model.generateContent(templateId, params);
     const contents: ContentMode[] = [];
 
