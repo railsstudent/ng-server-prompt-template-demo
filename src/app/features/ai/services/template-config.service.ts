@@ -1,5 +1,11 @@
 import { DestroyRef, inject, Injectable, signal } from '@angular/core';
-import { activate, getValue, onConfigUpdate, RemoteConfig } from 'firebase/remote-config';
+import {
+  activate,
+  fetchAndActivate,
+  getValue,
+  onConfigUpdate,
+  RemoteConfig,
+} from 'firebase/remote-config';
 import { TEMPLATE_KEYS } from '../constants/template-keys.const';
 import { TemplateKey, TemplateMap } from '../types/template-key.type';
 
@@ -15,6 +21,8 @@ export class TemplateConfigService {
     threeDimentionsMapTemplateId: '',
     figurineTemplateId: '',
   });
+
+  templates = this.#templates.asReadonly();
 
   destroyRef$ = inject(DestroyRef);
 
@@ -33,11 +41,6 @@ export class TemplateConfigService {
     }
   }
 
-  updateTemplateId(key: TemplateKey, value: string) {
-    this.#templates.update((prev) => ({ ...prev, [key]: value }));
-    console.log(`Update template id successfully.`, key, value);
-  }
-
   setupRemoteConfigListener(remoteConfig: RemoteConfig) {
     if (!remoteConfig) {
       console.warn('⚠️ Remote Config is not initialized yet.');
@@ -46,19 +49,26 @@ export class TemplateConfigService {
 
     const unsubscribe = onConfigUpdate(remoteConfig, {
       next: (configUpdate) => {
-        const updatedKeys = configUpdate.getUpdatedKeys();
-        const hasOverlap = TEMPLATE_KEYS.some((key) => updatedKeys.has(key));
-        if (hasOverlap) {
-          activate(remoteConfig).then(() => {
-            updatedKeys.forEach((key) => {
-              const value = getValue(remoteConfig, key).asString();
-              this.updateTemplateId(key as TemplateKey, value);
-            });
+        console.log('configUpdate.getUpdatedKeys()', configUpdate.getUpdatedKeys());
+        const templatesToUpdate = TEMPLATE_KEYS.filter((key) =>
+          configUpdate.getUpdatedKeys().has(key),
+        );
+        console.log('templatesToUpdate', templatesToUpdate);
+        activate(remoteConfig).then((activated) => {
+          this.#templates.update((prev) => {
+            const next = { ...prev };
+            for (const k of templatesToUpdate) {
+              next[k] = getValue(remoteConfig, k).asString();
+            }
+            return next;
           });
-        }
+
+          console.log('Firebase remote config updated:', activated);
+        });
       },
       error: (error) => {
         console.log('Config update error:', error);
+        fetchAndActivate(remoteConfig);
       },
       complete: () => {
         console.log('Listening stopped.');

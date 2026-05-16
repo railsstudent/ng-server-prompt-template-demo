@@ -1,10 +1,11 @@
 import { NAV_ITEMS } from '@/core/constants/nav-items.const';
 import { TemplateConfigService } from '@/features/ai/services/template-config.service';
+import { TemplateKey } from '@/features/ai/types/template-key.type';
 import { PageTitleTemplateKeyId } from '@/shared/types/page-title-template-keyid.type';
 import { createBreadcrumb } from '@/shared/utils/create-breadcrumb';
-import { inject, Injectable, linkedSignal } from '@angular/core';
+import { computed, inject, Injectable, linkedSignal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { ActivatedRoute, Event, EventType, Router } from '@angular/router';
+import { ActivatedRoute, Event, EventType, NavigationEnd, Router } from '@angular/router';
 import { filter, shareReplay } from 'rxjs';
 
 @Injectable({
@@ -33,17 +34,18 @@ export class NavService {
       event && event.type == EventType.NavigationEnd ? createBreadcrumb(event.url) : '',
   }).asReadonly();
 
-  templateId = linkedSignal({
-    source: () => this.navigationEnd$(),
-    computation: (event) => {
-      if (event && event.type == EventType.NavigationEnd) {
-        return this.getCurrentlyUsedTemplateId();
-      }
-      return '';
-    },
-  }).asReadonly();
+  templateKeyAfterRouteChange = linkedSignal<NavigationEnd | undefined, TemplateKey | undefined>({
+    source: this.navigationEnd$,
+    computation: () => this.getCurrenteRouteTemplateKeyId(),
+  });
 
-  private getCurrentlyUsedTemplateId(): string {
+  templateId = computed(() => {
+    const activeKey = this.templateKeyAfterRouteChange();
+    const templates = this.templateConfigService.templates();
+    return activeKey ? templates[activeKey] : '';
+  });
+
+  private getCurrenteRouteTemplateKeyId() {
     let route = this.activatedRoute;
     while (route.firstChild) {
       route = route.firstChild;
@@ -53,9 +55,9 @@ export class NavService {
     if (data) {
       const pageTitleTemplateKeyId = data as PageTitleTemplateKeyId;
       if (pageTitleTemplateKeyId.templateKeyId) {
-        return this.templateConfigService.getTemplateValue(pageTitleTemplateKeyId.templateKeyId);
+        return pageTitleTemplateKeyId.templateKeyId;
       }
     }
-    return '';
+    return undefined;
   }
 }
