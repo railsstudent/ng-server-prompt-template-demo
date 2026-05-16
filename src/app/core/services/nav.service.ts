@@ -1,80 +1,61 @@
-import { NavItem } from '@/shared/types/nav-item.type';
-import { BottleIconComponent } from '@/shared/ui/icons/bottle-icon.component';
-import { CarIconComponent } from '@/shared/ui/icons/car-icon.component';
-import { FigurineIconComponent } from '@/shared/ui/icons/figurine-icon.component';
-import { FlagIconComponent } from '@/shared/ui/icons/flag-icon.component';
-import { HistoryIconComponent } from '@/shared/ui/icons/history-icon.component';
-import { HomeIconComponent } from '@/shared/ui/icons/home-icon.component';
-import { MapIconComponent } from '@/shared/ui/icons/map-icon.component';
-import { Injectable } from '@angular/core';
+import { NAV_ITEMS } from '@/core/constants/nav-items.const';
+import { TemplateConfigService } from '@/features/ai/services/template-config.service';
+import { PageTitleTemplateKeyId } from '@/shared/types/page-title-template-keyid.type';
+import { createBreadcrumb } from '@/shared/utils/create-breadcrumb';
+import { inject, Injectable, linkedSignal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { ActivatedRoute, Event, EventType, Router } from '@angular/router';
+import { filter, shareReplay } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class NavService {
-  navItems: NavItem[] = [
-    {
-      id: 0,
-      label: 'Home',
-      path: '/',
-      isExact: true,
-      iconComponent: HomeIconComponent,
-      title: 'Home',
-      pageTitle: 'Home',
+  private readonly templateConfigService = inject(TemplateConfigService);
+  private readonly route = inject(Router);
+  private readonly activatedRoute = inject(ActivatedRoute);
+
+  navItems = NAV_ITEMS;
+
+  private navigationEnd$ = toSignal(
+    this.route.events.pipe(
+      filter((event) => event.type === EventType.NavigationEnd),
+      shareReplay({
+        bufferSize: 1,
+        refCount: true,
+      }),
+    ),
+  );
+
+  breadcrumb = linkedSignal<Event | undefined, string>({
+    source: () => this.navigationEnd$(),
+    computation: (event) =>
+      event && event.type == EventType.NavigationEnd ? createBreadcrumb(event.url) : '',
+  }).asReadonly();
+
+  templateId = linkedSignal({
+    source: () => this.navigationEnd$(),
+    computation: (event) => {
+      if (event && event.type == EventType.NavigationEnd) {
+        return this.getCurrentlyUsedTemplateId();
+      }
+      return '';
     },
-    {
-      id: 1,
-      label: 'Glass Bottle',
-      path: '/edit-image/glass-bottle-souvenir',
-      iconComponent: BottleIconComponent,
-      title: 'Glass Bottle',
-      pageTitle: 'Generate a glass bottle souvenir',
-      templateKeyId: 'glassBottleSouvenirTemplateId',
-    },
-    {
-      id: 2,
-      label: 'Figurine',
-      path: '/edit-image/figurine',
-      iconComponent: FigurineIconComponent,
-      title: 'Figurine',
-      pageTitle: 'Generate a Japanese-styled Figurine',
-      templateKeyId: 'figurineTemplateId',
-    },
-    {
-      id: 3,
-      label: '3D Map',
-      path: '/edit-image/map',
-      iconComponent: MapIconComponent,
-      title: 'Map',
-      pageTitle: 'Generate a three-dimensional map',
-      templateKeyId: 'threeDimentionsMapTemplateId',
-    },
-    {
-      id: 4,
-      label: 'Diecast Vehicle',
-      path: '/edit-image/diecast-vehicle',
-      iconComponent: CarIconComponent,
-      title: 'Diecast Vehicle',
-      pageTitle: 'Generate a diecast vehicle with your brand',
-      templateKeyId: 'diecastVehicleTemplateId',
-    },
-    {
-      id: 5,
-      label: 'Country Guide',
-      path: '/country-form',
-      iconComponent: FlagIconComponent,
-      title: 'Country',
-      pageTitle: 'Learn about this country',
-      templateKeyId: 'countryTemplateId',
-    },
-    {
-      id: 6,
-      label: 'History',
-      path: '/historic-event-form',
-      iconComponent: HistoryIconComponent,
-      title: 'History Event',
-      pageTitle: 'Important Moment of this Historic Event',
-      templateKeyId: 'historicEventTemplateId',
-    },
-  ];
+  }).asReadonly();
+
+  private getCurrentlyUsedTemplateId(): string {
+    let route = this.activatedRoute;
+    while (route.firstChild) {
+      route = route.firstChild;
+    }
+
+    const data = route.snapshot.data['pageTitleTemplateKeyId'] || undefined;
+    if (data) {
+      const pageTitleTemplateKeyId = data as PageTitleTemplateKeyId;
+      if (pageTitleTemplateKeyId.templateKeyId) {
+        return this.templateConfigService.getTemplateValue(pageTitleTemplateKeyId.templateKeyId);
+      }
+    }
+    return '';
+  }
 }

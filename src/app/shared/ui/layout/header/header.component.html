@@ -1,7 +1,10 @@
 <div class="header-container">
-  <h1 class="header-title">{{ breadcrumb() }}</h1>
+  @let bc = breadcrumb() || 'Home';
+  <h1 class="header-title">{{ bc }}</h1>
   <div class="header-status-container">
-    <div class="header-status-badge">Template ID: {{ templateId() }}</div>
+    @if (templateId(); as tid) {
+      <div class="header-status-badge">Template ID: {{ tid }}</div>
+    }
     <div class="header-status-text">Status: {{ status() }}</div>
   </div>
 </div>
