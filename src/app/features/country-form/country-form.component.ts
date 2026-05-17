@@ -31,7 +31,6 @@ export default class CountryFormComponent {
 
   countryMetadataList = COUNTRY_FORM_METADATA_LIST;
 
-  newImage = signal('');
   pageTitle = computed(() => this.pageTitleTemplateKeyId().pageTitle);
   hasRequiredData = computed(
     () => !!this.pageTitleTemplateKeyId().templateKeyId && !!this.countryModel().country,
@@ -39,15 +38,8 @@ export default class CountryFormComponent {
 
   #imageFacade = inject(ImageFacadeService);
 
-  isDisabled = computed(() => this.#imageFacade.isLoading() || !this.hasRequiredData());
-  uiState = computed(() => {
-    return {
-      image: this.newImage(),
-      isLoading: this.#imageFacade.isLoading(),
-      isError: this.#imageFacade.isError(),
-      errMsg: this.#imageFacade.errorMsg(),
-    };
-  });
+  isDisabled = computed(() => this.#imageFacade.uiState().isLoading || !this.hasRequiredData());
+  uiState = this.#imageFacade.uiState;
 
   async generateImage(event$: Event) {
     event$.preventDefault();
@@ -55,7 +47,7 @@ export default class CountryFormComponent {
       return;
     }
 
-    this.newImage.set('');
+    this.#imageFacade.updateImage('');
     const result = await this.#imageFacade.generateImage(
       this.pageTitleTemplateKeyId().templateKeyId as TemplateKey,
       this.hasRequiredData(),
@@ -63,6 +55,6 @@ export default class CountryFormComponent {
         country: this.countryModel().country,
       },
     );
-    this.newImage.set(result);
+    this.#imageFacade.updateImage(result);
   }
 }

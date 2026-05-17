@@ -2,7 +2,7 @@ import { TemplateConfigService } from '@/features/ai/services/template-config.se
 import { TemplateKey } from '@/features/ai/types/template-key.type';
 import { GlobalStateService } from '@/shared/services/global-state.service';
 import { ImageGenerationService } from '@/shared/services/image.service';
-import { computed, inject, Injectable } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
@@ -12,9 +12,20 @@ export class ImageFacadeService {
   #imageGenerationService = inject(ImageGenerationService);
   #templateConfigService = inject(TemplateConfigService);
 
-  isLoading = this.#globalStateService.isLoading;
-  isError = this.#globalStateService.isError;
-  errorMsg = computed(() => this.#globalStateService.errorMsg() || 'Unknown Error');
+  #newImage = signal('');
+
+  uiState = computed(() => {
+    return {
+      image: this.#newImage(),
+      isLoading: this.#globalStateService.isLoading(),
+      isError: this.#globalStateService.isError(),
+      errMsg: this.#globalStateService.errorMsg() || 'Unknown Error',
+    };
+  });
+
+  updateImage(image: string) {
+    this.#newImage.set(image);
+  }
 
   async generateImage(
     templateKey: TemplateKey,

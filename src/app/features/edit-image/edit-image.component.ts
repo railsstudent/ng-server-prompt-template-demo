@@ -23,7 +23,6 @@ import { ChangeDetectionStrategy, Component, computed, inject, input, signal } f
 export default class EditImageComponent {
   pageTitleTemplateKeyId = input.required<PageTitleTemplateKeyId>();
 
-  newImage = signal('');
   inlineData = signal({
     data: '',
     mimeType: '',
@@ -37,15 +36,8 @@ export default class EditImageComponent {
 
   #imageFacade = inject(ImageFacadeService);
 
-  isDisabled = computed(() => this.#imageFacade.isLoading() || !this.hasRequiredData());
-  uiState = computed(() => {
-    return {
-      image: this.newImage(),
-      isLoading: this.#imageFacade.isLoading(),
-      isError: this.#imageFacade.isError(),
-      errMsg: this.#imageFacade.errorMsg(),
-    };
-  });
+  isDisabled = computed(() => this.#imageFacade.uiState().isLoading || !this.hasRequiredData());
+  uiState = this.#imageFacade.uiState;
 
   onFileChanged(file: FileUpload | undefined) {
     this.inlineData.set({
@@ -61,7 +53,7 @@ export default class EditImageComponent {
       return;
     }
 
-    this.newImage.set('');
+    this.#imageFacade.updateImage('');
     const inlineImagesParams = toAiImageParams(this.inlineData());
 
     const result = await this.#imageFacade.generateImage(
@@ -69,6 +61,6 @@ export default class EditImageComponent {
       this.hasRequiredData(),
       inlineImagesParams,
     );
-    this.newImage.set(result);
+    this.#imageFacade.updateImage(result);
   }
 }
