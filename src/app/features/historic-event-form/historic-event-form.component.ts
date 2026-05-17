@@ -36,10 +36,7 @@ export default class HistoricFormComponent {
 
   pageTitle = computed(() => this.pageTitleTemplateKeyId().pageTitle);
   hasRequiredData = computed(
-    () =>
-      !!this.pageTitleTemplateKeyId().templateKeyId &&
-      this.historicEventModel().event.trim().length > 0 &&
-      this.historicEventModel().description.trim().length > 0,
+    () => !!this.pageTitleTemplateKeyId().templateKeyId && this.historicEventForm().valid(),
   );
 
   #imageFacade = inject(ImageFacadeService);

@@ -33,7 +33,7 @@ export default class CountryFormComponent {
 
   pageTitle = computed(() => this.pageTitleTemplateKeyId().pageTitle);
   hasRequiredData = computed(
-    () => !!this.pageTitleTemplateKeyId().templateKeyId && !!this.countryModel().country,
+    () => !!this.pageTitleTemplateKeyId().templateKeyId && this.countryForm().valid(),
   );
 
   #imageFacade = inject(ImageFacadeService);
