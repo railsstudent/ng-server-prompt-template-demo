@@ -1,26 +1,28 @@
+import { setUpSchemaForPath } from '@/core/form-generator/utils/generate-custom-validation.util';
+import { generateFormModelData } from '@/core/form-generator/utils/generate-form-model.util';
 import { ImageFacadeService } from '@/features/ai-generation/services/image-facade.service';
 import { TemplateKey } from '@/features/ai/types/template-key.type';
 import countryList from '@/public/countries.json';
 import { PageTitleTemplateKeyId } from '@/shared/types/page-title-template-keyid.type';
+import FormFieldErrorComponent from '@/shared/ui/form/form-field-error/form-field-error.component';
 import ImageDisplayComponent from '@/shared/ui/image-display/image-display.component';
 import { ChangeDetectionStrategy, Component, computed, inject, input, signal } from '@angular/core';
-import { debounce, form, FormField, minLength, required } from '@angular/forms/signals';
+import { form, FormField } from '@angular/forms/signals';
+import { COUNTRY_FORM_METADATA } from './constants/metadata-list.const';
+import { CountryFormModel } from './types/country-form-model.type';
 
 @Component({
   selector: 'app-country-form',
-  imports: [FormField, ImageDisplayComponent],
+  imports: [FormField, ImageDisplayComponent, FormFieldErrorComponent],
   templateUrl: './country-form.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class CountryFormComponent {
   pageTitleTemplateKeyId = input.required<PageTitleTemplateKeyId>();
-  countryModel = signal<{ country: string }>({
-    country: '',
-  });
+  countryModel = signal<CountryFormModel>(generateFormModelData(COUNTRY_FORM_METADATA));
   countryForm = form(this.countryModel, (schemaPath) => {
-    required(schemaPath.country, { message: 'Country is required' });
-    minLength(schemaPath.country, 2, { message: 'Country must be at least 2 characters long' });
-    debounce(schemaPath.country, 300);
+    const countryFieldConfig = COUNTRY_FORM_METADATA['country']?.fieldValidatorConfig;
+    setUpSchemaForPath(schemaPath.country, countryFieldConfig);
   });
 
   newImage = signal('');

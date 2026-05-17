@@ -2,30 +2,23 @@
   <h2 class="image-title">{{ pageTitle() }}</h2>
   <div class="w-full max-w-xl mx-auto">
     <form novalidate>
+      @let eventField = historicEventForm['event'];
       <label for="event">
         <span>Event:</span>
-        <input id="event" type="text" [formField]="historicEventForm.event" />
+        <input id="event" type="text" [formField]="eventField" />
       </label>
-      @if ((historicEventForm.event().touched() || historicEventForm.event().dirty()) && historicEventForm.event().invalid()) {
-        @let eventErrors = historicEventForm.event().errors();
-        @for (e of eventErrors; track $index) {
-          <p>{{ e.message }}</p>
-        }
-      }
+      <app-form-field-error [formField]="eventField" />
+
+      @let descriptionField = historicEventForm['description'];
       <label for="description">
         <span>Description:</span>
-        <textarea id="description" type="text" [formField]="historicEventForm.description"
+        <textarea id="description" type="text" [formField]="descriptionField"
           rows="5"
         ></textarea>
       </label>
-      @if ((historicEventForm.description().touched() || historicEventForm.description().dirty()) && historicEventForm.description().invalid()) {
-        @let descriptionErrors = historicEventForm.description().errors();
-        @for (e of descriptionErrors; track $index) {
-          <p>{{ e.message }}</p>
-        }
-      }
+      <app-form-field-error [formField]="descriptionField" />
+      <button type="submit" [disabled]="isLoading() || !hasRequiredData()" (click)="generateImage($event)">Generate</button>
     </form>
-    <button [disabled]="isLoading() || !hasRequiredData()" (click)="generateImage($event)">Generate</button>
   </div>
   <app-image-display [image]="newImage()" [isLoading]="isLoading()" [isError]="isError()" [errMsg]="errorMsg()" />
 </div>

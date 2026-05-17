@@ -2,22 +2,19 @@
   <h2 class="image-title">{{ pageTitle() }}</h2>
   <div class="w-full max-w-xl mx-auto">
     <form novalidate>
+      @let countryField = countryForm['country'];
       <label for="country">
         <span>Country:</span>
-        <select [formField]="countryForm.country">
+        <select [formField]="countryField">
             @for (c of countries; track c.code) {
               <option [value]="c.name">{{ c.name }} </option>
             }
         </select>
       </label>
-      @if ((countryForm.country().touched() || countryForm.country().dirty()) && countryForm.country().invalid()) {
-        @let countryErrors = countryForm.country().errors();
-        @for (e of countryErrors; track $index) {
-          <p>{{ e.message }}</p>
-        }
-      }
+      <app-form-field-error [formField]="countryField" />
+      <button type="submit" [disabled]="isLoading() || !hasRequiredData()" (click)="generateImage($event)">Generate</button>
     </form>
-    <button [disabled]="isLoading() || !hasRequiredData()" (click)="generateImage($event)">Generate</button>
+
   </div>
   <app-image-display [image]="newImage()" [isLoading]="isLoading()" [isError]="isError()" [errMsg]="errorMsg()" />
 </div>
