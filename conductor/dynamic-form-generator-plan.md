@@ -42,12 +42,12 @@ Create `FormFieldMetadata` in `form-field-metadata.type.ts`:
 - `initialValue: string | number`
 - `inputControl: 'input' | 'textarea' | 'select'`
 - `type: 'text' | 'number'`
-- `fieldValidatorConfig?: FormFieldValidationConfig`
+- `fieldValidatorConfig?: ValidationConfig`
 - `listDataType?: 'country'`
 
 ### 3. Implement Utility Functions
 
-**A. `setUpSchemaForPath<T>(path: SchemaPath<T>, config?: FormFieldValidationConfig)` in `generate-custom-validation.util.ts`:**
+**A. `setUpSchemaForPath<T>(path: SchemaPath<T>, config?: ValidationConfig)` in `generate-custom-validation.util.ts`:**
 
 - Adds validation to a schema path using `@angular/forms/signals` (`required`, `maxLength`, `minLength`, `min`, `max`, `debounce`).
 - If a property like `isRequired` is true, calls `required(path, { message: ... })`.

@@ -8,11 +8,12 @@ export const HISTORIC_EVENT_FORM_METADATA = {
     inputControl: 'input',
     inputType: 'text',
     isMultiSelect: false,
+    label: 'Event:',
     fieldValidatorConfig: {
       isRequired: true,
       requiredErrorMsg: 'Event is required',
-      minLength: 2,
-      minLengthErrorMsg: 'Event must be at least 2 characters long',
+      minLength: 3,
+      minLengthErrorMsg: 'Event must be at least 3 characters long',
       debounce: 300,
     },
   },
@@ -23,6 +24,7 @@ export const HISTORIC_EVENT_FORM_METADATA = {
     inputControl: 'textarea',
     inputType: 'text',
     isMultiSelect: false,
+    label: 'Description:',
     fieldValidatorConfig: {
       isRequired: true,
       requiredErrorMsg: 'Description is required',

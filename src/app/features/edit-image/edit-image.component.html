@@ -2,7 +2,7 @@
   <h2 class="image-title">{{ pageTitle() }}</h2>
   <div class="w-full max-w-xl mx-auto">
     <app-file-uploader (fileChanged)="onFileChanged($event)" />
-    <button [disabled]="!hasRequiredData() || isLoading()" (click)="generateImage($event)">Generate</button>
+    <button [disabled]="isDisabled()" (click)="generateImage($event)">Generate</button>
   </div>
-  <app-image-display [image]="newImage()" [isLoading]="isLoading()" [isError]="isError()" [errMsg]="errorMsg()" />
+  <app-image-display [uiState]="uiState()" />
 </div>

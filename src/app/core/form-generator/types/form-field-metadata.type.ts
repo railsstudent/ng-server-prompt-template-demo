@@ -6,7 +6,8 @@ export interface FormFieldMetadata {
   initialValue: string | number | string[] | number[];
   inputControl: 'input' | 'textarea' | 'select';
   isMultiSelect?: boolean;
-  inputType: 'text' | 'number';
+  inputType?: 'text' | 'number' | 'radio' | 'checkbox' | 'password';
   fieldValidatorConfig?: ValidationConfig;
   listDataType?: 'country';
+  label?: string;
 }

@@ -5,10 +5,10 @@ export const COUNTRY_FORM_METADATA = {
     fieldName: 'country',
     fieldType: 'string',
     initialValue: '',
-    inputControl: 'input',
-    inputType: 'text',
+    inputControl: 'select',
     isMultiSelect: false,
     listDataType: 'country',
+    label: 'Country:',
     fieldValidatorConfig: {
       isRequired: true,
       requiredErrorMsg: 'Country is required',

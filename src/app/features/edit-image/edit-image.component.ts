@@ -30,9 +30,15 @@ export default class EditImageComponent {
 
   #imageFacade = inject(ImageFacadeService);
 
-  isLoading = this.#imageFacade.isLoading;
-  isError = this.#imageFacade.isError;
-  errorMsg = this.#imageFacade.errorMsg;
+  isDisabled = computed(() => this.#imageFacade.isLoading() || !this.hasRequiredData());
+  uiState = computed(() => {
+    return {
+      image: this.newImage(),
+      isLoading: this.#imageFacade.isLoading(),
+      isError: this.#imageFacade.isError(),
+      errMsg: this.#imageFacade.errorMsg(),
+    };
+  });
 
   onFileChanged(file: FileUpload | undefined) {
     this.inlineData.set({
