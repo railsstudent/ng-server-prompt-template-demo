@@ -10,7 +10,14 @@ import { ChangeDetectionStrategy, Component, computed, inject, input, signal } f
 @Component({
   selector: 'app-edit-image',
   imports: [FileUploaderComponent, ImageDisplayComponent],
-  templateUrl: './edit-image.component.html',
+  template: ` <div class="image-card">
+    <h2 class="image-title">{{ pageTitle() }}</h2>
+    <div class="w-full max-w-xl mx-auto">
+      <app-file-uploader (fileChanged)="onFileChanged($event)" />
+      <button [disabled]="isDisabled()" (click)="generateImage($event)">Generate</button>
+    </div>
+    <app-image-display [uiState]="uiState()" />
+  </div>`,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class EditImageComponent {

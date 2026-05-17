@@ -1,8 +1,0 @@
-<div class="image-card">
-  <h2 class="image-title">{{ pageTitle() }}</h2>
-  <div class="w-full max-w-xl mx-auto">
-    <app-file-uploader (fileChanged)="onFileChanged($event)" />
-    <button [disabled]="isDisabled()" (click)="generateImage($event)">Generate</button>
-  </div>
-  <app-image-display [uiState]="uiState()" />
-</div>
