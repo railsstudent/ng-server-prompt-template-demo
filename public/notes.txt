@@ -1,0 +1,13 @@
+// Define your feature data package (e.g., in a data.ts file or route config)
+    2 const countryFeatureData = {
+    3   metadata: COUNTRY_FORM_METADATA,
+    4   initialData: generateFormModelData(COUNTRY_FORM_METADATA), // Infers correctly
+    5   templateKey: 'COUNTRY_PROMPT'
+    6 };
+    7
+    8 // Or define a helper type for your outlet data if needed
+    9 type FeatureData<T extends Record<string, FormFieldMetadata>> = {
+   10   metadata: T,
+   11   initialData: DynamicFormModelFromRecord<T>,
+   12   templateKey: string
+   13 };
