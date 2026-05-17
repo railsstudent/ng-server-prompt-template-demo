@@ -3,17 +3,26 @@ import { ImageDisplayState } from './types/image-display-state.type';
 
 @Component({
   selector: 'app-image-display',
-  template: ` <div>
+  styleUrl: './image-display.component.css',
+  template: ` <div class="image-display">
     @let state = uiState();
     @if (state.isLoading) {
-      <div>Loading...</div>
+      <div class="image-display-msg-wrapper">
+        <p>Loading...</p>
+      </div>
     } @else if (state.isError) {
-      <div>Error: {{ errorMsgWithDefaultValue() }}</div>
+      <div class="image-display-msg-wrapper">
+        <p>Error: {{ errorMsgWithDefaultValue() }}</p>
+      </div>
     } @else {
       @if (state.image; as img) {
-        <img src="{{ img }}" alt="Generated Image" />
+        <div class="image-display-msg-wrapper">
+          <img src="{{ img }}" alt="Generated Image" class="image-display-img" />
+        </div>
       } @else {
-        <div>No image generated yet.</div>
+        <div class="image-display-msg-wrapper">
+          <p>No image generated yet.</p>
+        </div>
       }
     }
   </div>`,

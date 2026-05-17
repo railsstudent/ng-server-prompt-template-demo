@@ -12,3 +12,7 @@
 .image-text {
   @apply text-gray-700;
 }
+
+.btn-generate {
+  @apply bg-indigo-600 text-white rounded p-2 mt-4;
+}

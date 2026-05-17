@@ -1,0 +1,13 @@
+@reference "../../../../styles.css";
+
+.image-display {
+  @apply w-full max-w-3xl mx-auto;
+}
+
+.image-display-img {
+  @apply w-full h-auto rounded-lg shadow-md;
+}
+
+.image-display-msg-wrapper {
+  @apply flex justify-center p-4;
+}

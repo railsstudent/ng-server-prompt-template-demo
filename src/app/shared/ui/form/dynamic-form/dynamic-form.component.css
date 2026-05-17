@@ -1,0 +1,25 @@
+@reference "../../../../../styles.css";
+
+.dynamic-form {
+  @apply w-full max-w-xl mx-auto;
+}
+
+.dynamic-form-form {
+  @apply flex flex-col gap-4;
+}
+
+.dynamic-form-label {
+  @apply font-bold text-gray-700 text-lg;
+}
+
+.dynamic-form-field {
+  @apply flex flex-col gap-1;
+}
+
+.dynamic-form-text {
+  @apply text-base font-medium block w-full mt-1 border rounded p-2
+}
+
+.s {
+  @apply flex flex-col gap-4;
+}

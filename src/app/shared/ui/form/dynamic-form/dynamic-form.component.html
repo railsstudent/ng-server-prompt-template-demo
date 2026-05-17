@@ -1,0 +1,58 @@
+<div class="dynamic-form">
+    <form novalidate class="dynamic-form-form">
+      @for (field of formFieldMetadata(); track field.fieldName) {
+        @let fieldName = field.fieldName;
+        @let inputControl = field.inputControl;
+        @let label = field.label || 'Label:';
+        @let inputType = field.inputType || 'text';
+        @let formField = $any(signalForm())[fieldName];
+
+        <div class="dynamic-form-field">
+          @if (inputControl === 'input') {
+            <label [for]="fieldName" class="dynamic-form-label">
+              <span>{{ label }}</span>
+              <input
+                [id]="fieldName"
+                [type]="inputType"
+                [formField]="$any(formField)"
+                class="dynamic-form-text"
+              />
+            </label>
+            <app-form-field-error [formField]="formField" />
+          } @else if (inputControl === 'textarea') {
+            <label [for]="fieldName" class="dynamic-form-label">
+              <span>{{ label }}</span>
+              <textarea
+                [id]="fieldName"
+                [formField]="$any(formField)"
+                rows="5"
+                class="dynamic-form-text"
+              ></textarea>
+            </label>
+            <app-form-field-error [formField]="formField" />
+          } @else if (inputControl === 'select') {
+            @let listDataType = field.listDataType || '';
+            @if (listDataType === 'country') {
+              <label [for]="fieldName" class="dynamic-form-label">
+                <span>{{ label }}</span>
+                <select [id]="fieldName" [formField]="$any(formField)" class="dynamic-form-text">
+                  @for (c of countries; track c.code) {
+                    <option [value]="c.name">{{ c.name }}</option>
+                  }
+                </select>
+              </label>
+              <app-form-field-error [formField]="formField" />
+            }
+          }
+        </div>
+      }
+      <button
+        type="submit"
+        [disabled]="isBtnDisabled()"
+        (click)="btnClicked.emit($event)"
+        class="btn-generate"
+      >
+        Generate
+      </button>
+    </form>
+  </div>

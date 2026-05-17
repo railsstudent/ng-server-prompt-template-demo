@@ -39,9 +39,9 @@ export const appConfig: ApplicationConfig = {
     ),
     provideAppInitializer(async () => {
       const configService = inject(ConfigService);
-      const remoteConfigService = inject(TemplateConfigService);
+      const templateConfigService = inject(TemplateConfigService);
       await configService.initialize();
-      remoteConfigService.updateTemplateIds(configService.remoteConfig);
+      templateConfigService.updateTemplateIds(configService.remoteConfig);
     }),
     provideAIModels(),
   ],

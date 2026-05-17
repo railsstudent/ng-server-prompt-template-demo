@@ -4,9 +4,11 @@ import { FieldTree } from '@angular/forms/signals';
 @Component({
   selector: 'app-form-field-error',
   template: ` @if (showErrors()) {
-    @for (e of errors(); track $index) {
-      <p>{{ e.message }}</p>
-    }
+    <div class="font-medium text-lg text-red-500">
+      @for (e of errors(); track $index) {
+        <p>{{ e.message }}</p>
+      }
+    </div>
   }`,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

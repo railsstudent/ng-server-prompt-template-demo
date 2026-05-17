@@ -10,11 +10,16 @@ import { ChangeDetectionStrategy, Component, computed, inject, input, signal } f
 @Component({
   selector: 'app-edit-image',
   imports: [FileUploaderComponent, ImageDisplayComponent],
+  styleUrl: './edit-image.component.css',
   template: ` <div class="image-card">
     <h2 class="image-title">{{ pageTitle() }}</h2>
-    <div class="w-full max-w-xl mx-auto">
+    <div class="edit-image">
       <app-file-uploader (fileChanged)="onFileChanged($event)" />
-      <button [disabled]="isDisabled()" (click)="generateImage($event)">Generate</button>
+      <form novalidate class="edit-image-form">
+        <button [disabled]="isDisabled()" (click)="generateImage($event)" class="btn-generate">
+          Generate
+        </button>
+      </form>
     </div>
     <app-image-display [uiState]="uiState()" />
   </div>`,

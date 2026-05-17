@@ -1,0 +1,9 @@
+@reference "../../../styles.css";
+
+.edit-image {
+  @apply w-full max-w-xl mx-auto;
+}
+
+.edit-image-form {
+  @apply flex flex-col gap-4;
+}
