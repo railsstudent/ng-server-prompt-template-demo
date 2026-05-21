@@ -1,59 +1,43 @@
 # NgServerPromptTemplateDemo
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.2.2.
+## Running the Project Locally
 
-## Development server
+Follow these steps to set up and run the project on your local machine:
 
-To start a local development server, run:
+### Prerequisites
 
-```bash
-ng serve
-```
+- **Node.js**: Version 20 or higher.
+- **Angular CLI**: Version 21 or higher.
+- **Firebase Project**: A Firebase project must already be created.
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+1. **Configure Firebase Project:**
+   Open the `firebase/.firebaserc` file and update the `"default"` project name to your target Firebase project ID.
 
-## Code scaffolding
+2. **Set up Environment Variables:**
+   Copy the `.env.example` file to a new file named `.env` in the root directory, and fill in your required Firebase configuration values.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+3. **Generate Firebase Configurations:**
+   Run the following npm commands to generate your Firebase configuration and remote config defaults:
 
-```bash
-ng generate component component-name
-```
+   ```bash
+   npm run config
+   npm run firebase:remoteconfig
+   ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+4. **Install Dependencies:**
+   Download the required project dependencies by running:
 
-```bash
-ng generate --help
-```
+   ```bash
+   npm install
+   ```
 
-## Building
+5. **Start the Development Server:**
+   Launch the Angular development server:
 
-To build the project run:
+   ```bash
+   ng serve
+   ```
 
-```bash
-ng build
-```
+   > **Note:** Always remember to run the configuration scripts from Step 3 (`npm run config` and `npm run firebase:remoteconfig`) to pull the latest Firebase values before running `ng serve`.
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+   Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
