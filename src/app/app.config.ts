@@ -42,6 +42,7 @@ export const appConfig: ApplicationConfig = {
       const templateConfigService = inject(TemplateConfigService);
       await configService.initialize();
       templateConfigService.updateTemplateIds(configService.remoteConfig);
+      templateConfigService.setupRemoteConfigListener(configService.remoteConfig);
     }),
     provideAIModels(),
   ],
