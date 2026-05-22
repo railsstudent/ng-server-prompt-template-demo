@@ -24,14 +24,12 @@ export class ServerPromptService {
     for (const candidate of candidates) {
       const parts = candidate.content.parts || [];
       for (const part of parts) {
-        const text = part.text;
-        const data = part.inlineData?.data;
-        const mimeType = part.inlineData?.mimeType;
-        if (text) {
-          contents.push({ mode: 'text', content: text });
+        const { text: content, inlineData } = part;
+        const { data, mimeType } = inlineData || {};
+        if (content) {
+          contents.push({ mode: 'text', content });
         } else if (data && mimeType) {
-          const inlineData = `data:${mimeType};base64,${data}`;
-          contents.push({ mode: 'image', content: inlineData });
+          contents.push({ mode: 'image', content: `data:${mimeType};base64,${data}` });
         }
       }
     }
