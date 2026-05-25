@@ -15,9 +15,8 @@ type LoadComponentReturnType = () =>
 function createResolverRoute(path: string, componentName: string) {
   const componentLoaderMap: Record<string, LoadComponentReturnType> = {
     'edit-image': () => import('./features/edit-image/edit-image.component'),
-    'country-form': () => import('./features/country-form/country-form.component'),
-    'historic-event-form': () =>
-      import('./features/historic-event-form/historic-event-form.component'),
+    'country-form': () => import('./shared/ui/form-generator/form-generator.component'),
+    'historic-event-form': () => import('./shared/ui/form-generator/form-generator.component'),
   };
 
   const loadComponent = componentLoaderMap[componentName];
