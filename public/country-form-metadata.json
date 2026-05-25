@@ -1,0 +1,16 @@
+{
+  "country": {
+    "fieldName": "country",
+    "fieldType": "string",
+    "initialValue": "",
+    "inputControl": "select",
+    "isMultiSelect": false,
+    "listDataType": "country",
+    "label": "Country:",
+    "fieldValidatorConfig": {
+      "isRequired": true,
+      "requiredErrorMsg": "Country is required",
+      "debounce": 300
+    }
+  }
+}
