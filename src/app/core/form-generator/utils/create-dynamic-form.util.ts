@@ -1,22 +1,23 @@
-import { WritableSignal } from '@angular/core';
-import { FieldTree, form } from '@angular/forms/signals';
-import { DynamicFormModelFromRecord } from '@/core/form-generator/types/dynamic-form-model.type';
 import { FormFieldMetadata } from '@/core/form-generator/types/form-field-metadata.type';
+import { signal } from '@angular/core';
+import { form } from '@angular/forms/signals';
+import { DynamicFormContext } from '../types/dynamic-form-context.type';
 import { setUpFormSchema } from './generate-custom-validation.util';
+import { generateFormModelData } from './generate-form-model.util';
 
 export function createDynamicForm<TRecord extends Record<string, FormFieldMetadata>>(
-  modelSignal: WritableSignal<DynamicFormModelFromRecord<TRecord>>,
   metadataRecord: TRecord,
-): {
-  dynamicForm: FieldTree<DynamicFormModelFromRecord<TRecord>>;
-  metadataList: FormFieldMetadata[];
-} {
+): DynamicFormContext<TRecord> {
+  const initialData = generateFormModelData(metadataRecord);
+  const modelSignal = signal(initialData);
   const dynamicForm = form(modelSignal, (schemaPath) =>
     setUpFormSchema(schemaPath, metadataRecord),
   );
   const metadataList = Object.values(metadataRecord);
 
   return {
+    // initialData,
+    modelSignal,
     dynamicForm,
     metadataList,
   };
