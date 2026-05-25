@@ -71,4 +71,13 @@ export const NAV_ITEMS: NavItem[] = [
     pageTitle: 'Important Moment of this Historic Event',
     templateKeyId: 'historicEventTemplateId',
   },
+  {
+    id: 7,
+    label: 'Empire',
+    path: '/empire-form',
+    iconComponent: FlagIconComponent,
+    title: 'Empire',
+    pageTitle: 'Great Empires in the history',
+    templateKeyId: 'empireTemplateId',
+  },
 ];

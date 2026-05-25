@@ -17,6 +17,7 @@ function createResolverRoute(path: string, componentName: string) {
     'edit-image': () => import('./features/edit-image/edit-image.component'),
     'country-form': () => import('./shared/ui/form-generator/form-generator.component'),
     'historic-event-form': () => import('./shared/ui/form-generator/form-generator.component'),
+    'empire-form': () => import('./shared/ui/form-generator/form-generator.component'),
   };
 
   const loadComponent = componentLoaderMap[componentName];
@@ -51,6 +52,7 @@ export const routes: Routes = [
   createResolverRoute('edit-image/:path', 'edit-image'),
   createResolverRoute('country-form', 'country-form'),
   createResolverRoute('historic-event-form', 'historic-event-form'),
+  createResolverRoute('empire-form', 'empire-form'),
   {
     path: '',
     pathMatch: 'full',

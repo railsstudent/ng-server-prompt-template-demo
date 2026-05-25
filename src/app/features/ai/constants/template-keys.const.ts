@@ -5,4 +5,5 @@ export const TEMPLATE_KEYS = [
   'glassBottleSouvenirTemplateId',
   'threeDimentionsMapTemplateId',
   'figurineTemplateId',
+  'empireTemplateId',
 ] as const;

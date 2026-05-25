@@ -20,6 +20,7 @@ export class TemplateConfigService {
     glassBottleSouvenirTemplateId: '',
     threeDimentionsMapTemplateId: '',
     figurineTemplateId: '',
+    empireTemplateId: '',
   });
 
   templates = this.#templates.asReadonly();
