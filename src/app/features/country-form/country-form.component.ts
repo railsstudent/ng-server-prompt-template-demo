@@ -7,7 +7,6 @@ import ImageDisplayComponent from '@/shared/ui/image-display/image-display.compo
 import { ChangeDetectionStrategy, Component, computed, inject, input, signal } from '@angular/core';
 import { COUNTRY_FORM_METADATA } from './constants/metadata-list.const';
 import { COUNTRY_INITIAL_DATA } from './data/country_initial_data';
-import { CountryFormModel } from './types/country-form-model.type';
 
 @Component({
   selector: 'app-country-form',
@@ -26,7 +25,7 @@ import { CountryFormModel } from './types/country-form-model.type';
 })
 export default class CountryFormComponent {
   pageTitleTemplateKeyId = input.required<PageTitleTemplateKeyId>();
-  countryModel = signal<CountryFormModel>(COUNTRY_INITIAL_DATA);
+  countryModel = signal(COUNTRY_INITIAL_DATA);
   dynamicFormList = createDynamicForm(this.countryModel, COUNTRY_FORM_METADATA);
   countryForm = this.dynamicFormList.dynamicForm;
   countryMetadataList = this.dynamicFormList.metadataList;

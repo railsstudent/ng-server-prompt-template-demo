@@ -7,7 +7,6 @@ import ImageDisplayComponent from '@/shared/ui/image-display/image-display.compo
 import { ChangeDetectionStrategy, Component, computed, inject, input, signal } from '@angular/core';
 import { HISTORIC_EVENT_FORM_METADATA } from './constants/metadata-list.const';
 import { HISTORIC_EVENT_INITIAL_DATA } from './data/historic_event_initial_data';
-import { HistoricEventFormModel } from './types/historic-event-form-model.type';
 
 @Component({
   selector: 'app-historic-event-form',
@@ -27,7 +26,7 @@ import { HistoricEventFormModel } from './types/historic-event-form-model.type';
 export default class HistoricFormComponent {
   pageTitleTemplateKeyId = input.required<PageTitleTemplateKeyId>();
 
-  historicEventModel = signal<HistoricEventFormModel>(HISTORIC_EVENT_INITIAL_DATA);
+  historicEventModel = signal(HISTORIC_EVENT_INITIAL_DATA);
   dynamicFormList = createDynamicForm(this.historicEventModel, HISTORIC_EVENT_FORM_METADATA);
   historicEventForm = this.dynamicFormList.dynamicForm;
   historicEventMetadataList = this.dynamicFormList.metadataList;
