@@ -34,7 +34,3 @@ export const HISTORIC_EVENT_FORM_METADATA = {
     },
   },
 } as const satisfies Record<string, FormFieldMetadata>;
-
-export const HISTORIC_EVENT_FORM_METADATA_LIST: FormFieldMetadata[] = Object.values(
-  HISTORIC_EVENT_FORM_METADATA,
-);

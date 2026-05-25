@@ -5,10 +5,7 @@ import { PageTitleTemplateKeyId } from '@/shared/types/page-title-template-keyid
 import DynamicFormComponent from '@/shared/ui/form/dynamic-form/dynamic-form.component';
 import ImageDisplayComponent from '@/shared/ui/image-display/image-display.component';
 import { ChangeDetectionStrategy, Component, computed, inject, input, signal } from '@angular/core';
-import {
-  HISTORIC_EVENT_FORM_METADATA,
-  HISTORIC_EVENT_FORM_METADATA_LIST,
-} from './constants/metadata-list.const';
+import { HISTORIC_EVENT_FORM_METADATA } from './constants/metadata-list.const';
 import { HISTORIC_EVENT_INITIAL_DATA } from './data/historic_event_initial_data';
 import { HistoricEventFormModel } from './types/historic-event-form-model.type';
 
@@ -31,8 +28,9 @@ export default class HistoricFormComponent {
   pageTitleTemplateKeyId = input.required<PageTitleTemplateKeyId>();
 
   historicEventModel = signal<HistoricEventFormModel>(HISTORIC_EVENT_INITIAL_DATA);
-  historicEventForm = createDynamicForm(this.historicEventModel, HISTORIC_EVENT_FORM_METADATA);
-  historicEventMetadataList = HISTORIC_EVENT_FORM_METADATA_LIST;
+  dynamicFormList = createDynamicForm(this.historicEventModel, HISTORIC_EVENT_FORM_METADATA);
+  historicEventForm = this.dynamicFormList.dynamicForm;
+  historicEventMetadataList = this.dynamicFormList.metadataList;
 
   pageTitle = computed(() => this.pageTitleTemplateKeyId().pageTitle);
   hasRequiredData = computed(

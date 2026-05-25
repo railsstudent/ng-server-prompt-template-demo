@@ -7,6 +7,17 @@ import { setUpFormSchema } from './generate-custom-validation.util';
 export function createDynamicForm<TRecord extends Record<string, FormFieldMetadata>>(
   modelSignal: WritableSignal<DynamicFormModelFromRecord<TRecord>>,
   metadataRecord: TRecord,
-): FieldTree<DynamicFormModelFromRecord<TRecord>> {
-  return form(modelSignal, (schemaPath) => setUpFormSchema(schemaPath, metadataRecord));
+): {
+  dynamicForm: FieldTree<DynamicFormModelFromRecord<TRecord>>;
+  metadataList: FormFieldMetadata[];
+} {
+  const dynamicForm = form(modelSignal, (schemaPath) =>
+    setUpFormSchema(schemaPath, metadataRecord),
+  );
+  const metadataList = Object.values(metadataRecord);
+
+  return {
+    dynamicForm,
+    metadataList,
+  };
 }

@@ -5,7 +5,7 @@ import { PageTitleTemplateKeyId } from '@/shared/types/page-title-template-keyid
 import DynamicFormComponent from '@/shared/ui/form/dynamic-form/dynamic-form.component';
 import ImageDisplayComponent from '@/shared/ui/image-display/image-display.component';
 import { ChangeDetectionStrategy, Component, computed, inject, input, signal } from '@angular/core';
-import { COUNTRY_FORM_METADATA, COUNTRY_FORM_METADATA_LIST } from './constants/metadata-list.const';
+import { COUNTRY_FORM_METADATA } from './constants/metadata-list.const';
 import { COUNTRY_INITIAL_DATA } from './data/country_initial_data';
 import { CountryFormModel } from './types/country-form-model.type';
 
@@ -27,9 +27,9 @@ import { CountryFormModel } from './types/country-form-model.type';
 export default class CountryFormComponent {
   pageTitleTemplateKeyId = input.required<PageTitleTemplateKeyId>();
   countryModel = signal<CountryFormModel>(COUNTRY_INITIAL_DATA);
-  countryForm = createDynamicForm(this.countryModel, COUNTRY_FORM_METADATA);
-
-  countryMetadataList = COUNTRY_FORM_METADATA_LIST;
+  dynamicFormList = createDynamicForm(this.countryModel, COUNTRY_FORM_METADATA);
+  countryForm = this.dynamicFormList.dynamicForm;
+  countryMetadataList = this.dynamicFormList.metadataList;
 
   pageTitle = computed(() => this.pageTitleTemplateKeyId().pageTitle);
   hasRequiredData = computed(

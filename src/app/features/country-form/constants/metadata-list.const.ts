@@ -16,5 +16,3 @@ export const COUNTRY_FORM_METADATA = {
     },
   },
 } as const satisfies Record<string, FormFieldMetadata>;
-
-export const COUNTRY_FORM_METADATA_LIST: FormFieldMetadata[] = Object.values(COUNTRY_FORM_METADATA);
