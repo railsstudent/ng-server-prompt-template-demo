@@ -13,12 +13,9 @@ export function createDynamicForm<TRecord extends Record<string, FormFieldMetada
   const dynamicForm = form(modelSignal, (schemaPath) =>
     setUpFormSchema(schemaPath, metadataRecord),
   );
-  const metadataList = Object.values(metadataRecord);
 
   return {
-    // initialData,
     modelSignal,
     dynamicForm,
-    metadataList,
   };
 }

@@ -1,3 +1,4 @@
+import { FormFieldMetadata } from '@/core/form-generator/types/form-field-metadata.type';
 import { createDynamicForm } from '@/core/form-generator/utils/create-dynamic-form.util';
 import { ImageFacadeService } from '@/features/ai-generation/services/image-facade.service';
 import { TemplateKey } from '@/features/ai/types/template-key.type';
@@ -5,7 +6,7 @@ import { PageTitleTemplateKeyId } from '@/shared/types/page-title-template-keyid
 import DynamicFormComponent from '@/shared/ui/form/dynamic-form/dynamic-form.component';
 import ImageDisplayComponent from '@/shared/ui/image-display/image-display.component';
 import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
-import { COUNTRY_FORM_METADATA } from './constants/metadata-list.const';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-country-form',
@@ -13,7 +14,7 @@ import { COUNTRY_FORM_METADATA } from './constants/metadata-list.const';
   template: ` <div class="image-card">
     <h2 class="image-title">{{ pageTitle() }}</h2>
     <app-dynamic-form
-      [formFieldMetadata]="countryMetadataList"
+      [formFieldMetadata]="metadata"
       [signalForm]="countryForm"
       [isBtnDisabled]="isDisabled()"
       (btnClicked)="generateImage($event)"
@@ -24,10 +25,13 @@ import { COUNTRY_FORM_METADATA } from './constants/metadata-list.const';
 })
 export default class CountryFormComponent {
   pageTitleTemplateKeyId = input.required<PageTitleTemplateKeyId>();
-  dynamicFormContext = createDynamicForm(COUNTRY_FORM_METADATA);
+
+  currentRoute = inject(ActivatedRoute);
+
+  metadata = this.currentRoute.snapshot.data['metadata'] as Record<string, FormFieldMetadata>;
+  dynamicFormContext = createDynamicForm(this.metadata);
   countryModel = this.dynamicFormContext.modelSignal;
   countryForm = this.dynamicFormContext.dynamicForm;
-  countryMetadataList = this.dynamicFormContext.metadataList;
 
   pageTitle = computed(() => this.pageTitleTemplateKeyId().pageTitle);
   hasRequiredData = computed(
@@ -45,14 +49,10 @@ export default class CountryFormComponent {
       return;
     }
 
-    this.#imageFacade.updateImage('');
-    const result = await this.#imageFacade.generateImage(
+    await this.#imageFacade.generateImage(
       this.pageTitleTemplateKeyId().templateKeyId as TemplateKey,
       this.hasRequiredData(),
-      {
-        country: this.countryModel().country,
-      },
+      this.countryModel(),
     );
-    this.#imageFacade.updateImage(result);
   }
 }

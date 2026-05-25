@@ -1,3 +1,4 @@
+import { FormFieldMetadata } from '@/core/form-generator/types/form-field-metadata.type';
 import { NavService } from '@/core/services/nav.service';
 import { PageTitleTemplateKeyId } from '@/shared/types/page-title-template-keyid.type';
 import { inject } from '@angular/core';
@@ -24,4 +25,12 @@ export const editePageTitleTemplateKeyIdResolver: ResolveFn<PageTitleTemplateKey
     pageTitle: item?.pageTitle || 'Edit An Image',
     templateKeyId: item?.templateKeyId,
   };
+};
+
+export const metadataResolver: ResolveFn<Record<string, FormFieldMetadata>> = (
+  _,
+  state: RouterStateSnapshot,
+) => {
+  const navService = inject(NavService);
+  return navService.findMetadataByPath(state.url);
 };

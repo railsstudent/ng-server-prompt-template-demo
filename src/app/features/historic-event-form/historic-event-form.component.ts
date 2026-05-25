@@ -1,3 +1,4 @@
+import { FormFieldMetadata } from '@/core/form-generator/types/form-field-metadata.type';
 import { createDynamicForm } from '@/core/form-generator/utils/create-dynamic-form.util';
 import { ImageFacadeService } from '@/features/ai-generation/services/image-facade.service';
 import { TemplateKey } from '@/features/ai/types/template-key.type';
@@ -5,7 +6,7 @@ import { PageTitleTemplateKeyId } from '@/shared/types/page-title-template-keyid
 import DynamicFormComponent from '@/shared/ui/form/dynamic-form/dynamic-form.component';
 import ImageDisplayComponent from '@/shared/ui/image-display/image-display.component';
 import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
-import { HISTORIC_EVENT_FORM_METADATA } from './constants/metadata-list.const';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-historic-event-form',
@@ -13,7 +14,7 @@ import { HISTORIC_EVENT_FORM_METADATA } from './constants/metadata-list.const';
   template: ` <div class="image-card">
     <h2 class="image-title">{{ pageTitle() }}</h2>
     <app-dynamic-form
-      [formFieldMetadata]="historicEventMetadataList"
+      [formFieldMetadata]="metadata"
       [signalForm]="historicEventForm"
       [isBtnDisabled]="isDisabled()"
       (btnClicked)="generateImage($event)"
@@ -24,11 +25,12 @@ import { HISTORIC_EVENT_FORM_METADATA } from './constants/metadata-list.const';
 })
 export default class HistoricFormComponent {
   pageTitleTemplateKeyId = input.required<PageTitleTemplateKeyId>();
+  currentRoute = inject(ActivatedRoute);
 
-  dynamicFormContext = createDynamicForm(HISTORIC_EVENT_FORM_METADATA);
+  metadata = this.currentRoute.snapshot.data['metadata'] as Record<string, FormFieldMetadata>;
+  dynamicFormContext = createDynamicForm(this.metadata);
   historicEventModel = this.dynamicFormContext.modelSignal;
   historicEventForm = this.dynamicFormContext.dynamicForm;
-  historicEventMetadataList = this.dynamicFormContext.metadataList;
 
   pageTitle = computed(() => this.pageTitleTemplateKeyId().pageTitle);
   hasRequiredData = computed(
@@ -46,15 +48,10 @@ export default class HistoricFormComponent {
       return;
     }
 
-    this.#imageFacade.updateImage('');
-    const result = await this.#imageFacade.generateImage(
+    await this.#imageFacade.generateImage(
       this.pageTitleTemplateKeyId().templateKeyId as TemplateKey,
       this.hasRequiredData(),
-      {
-        event: this.historicEventModel().event,
-        description: this.historicEventModel().description,
-      },
+      this.historicEventModel(),
     );
-    this.#imageFacade.updateImage(result);
   }
 }

@@ -1,4 +1,6 @@
+import { METADATA_MAPPING } from '@/core/constants/metadata-mapping.const';
 import { NAV_ITEMS } from '@/core/constants/nav-items.const';
+import { FormFieldMetadata } from '@/core/form-generator/types/form-field-metadata.type';
 import { TemplateConfigService } from '@/features/ai/services/template-config.service';
 import { TemplateKey } from '@/features/ai/types/template-key.type';
 import { PageTitleTemplateKeyId } from '@/shared/types/page-title-template-keyid.type';
@@ -59,5 +61,10 @@ export class NavService {
       }
     }
     return undefined;
+  }
+
+  findMetadataByPath(path: string): Record<string, FormFieldMetadata> {
+    const item = METADATA_MAPPING.find((item) => item.path === path);
+    return item?.metadata || {};
   }
 }

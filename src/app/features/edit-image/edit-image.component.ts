@@ -58,14 +58,11 @@ export default class EditImageComponent {
       return;
     }
 
-    this.#imageFacade.updateImage('');
     const inlineImagesParams = toAiImageParams(this.inlineData());
-
-    const result = await this.#imageFacade.generateImage(
+    await this.#imageFacade.generateImage(
       this.pageTitleTemplateKeyId().templateKeyId as TemplateKey,
       this.hasRequiredData(),
       inlineImagesParams,
     );
-    this.#imageFacade.updateImage(result);
   }
 }

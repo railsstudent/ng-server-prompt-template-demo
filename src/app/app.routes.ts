@@ -1,10 +1,11 @@
+import { Type } from '@angular/core';
 import { DefaultExport, Routes } from '@angular/router';
+import { Observable } from 'rxjs';
 import {
   editePageTitleTemplateKeyIdResolver,
   editeRouteTitleResolver,
+  metadataResolver,
 } from './resolvers/routes.resolver';
-import { Type } from '@angular/core';
-import { Observable } from 'rxjs';
 
 type LoadComponentReturnType = () =>
   | Type<unknown>
@@ -34,6 +35,7 @@ function createResolverRoute(path: string, componentName: string) {
     title: editeRouteTitleResolver,
     resolve: {
       pageTitleTemplateKeyId: editePageTitleTemplateKeyIdResolver,
+      metadata: metadataResolver,
     },
   };
 }

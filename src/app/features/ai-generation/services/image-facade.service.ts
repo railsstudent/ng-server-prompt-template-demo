@@ -23,23 +23,21 @@ export class ImageFacadeService {
     };
   });
 
-  updateImage(image: string) {
-    this.#newImage.set(image);
-  }
-
   async generateImage(
     templateKey: TemplateKey,
     hasRequiredData: boolean,
     params: Record<string, unknown>,
-  ) {
+  ): Promise<void> {
     try {
       if (hasRequiredData) {
+        this.#newImage.set('');
         const templateId = this.#templateConfigService.getTemplateValue(templateKey);
-        return await this.#imageGenerationService.generateImage(
+        const image = await this.#imageGenerationService.generateImage(
           hasRequiredData,
           templateId,
           params,
         );
+        this.#newImage.set(image);
       }
     } catch (e) {
       console.error(e);
@@ -47,7 +45,5 @@ export class ImageFacadeService {
     } finally {
       this.#globalStateService.stopLoading();
     }
-
-    return '';
   }
 }

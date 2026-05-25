@@ -1,6 +1,6 @@
 <div class="dynamic-form">
     <form novalidate class="dynamic-form-form">
-      @for (field of formFieldMetadata(); track field.fieldName) {
+      @for (field of formFieldMetadataList(); track field.fieldName) {
         @let fieldName = field.fieldName;
         @let inputControl = field.inputControl;
         @let label = field.label || 'Label:';
