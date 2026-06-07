@@ -1,6 +1,7 @@
 import { FormFieldMetadata } from '@/core/form-generator/types/form-field-metadata.type';
 import countryFormMetadata from '@/public/country-form-metadata.json';
 import historicEventFormMetadata from '@/public/historic-event-form-metadata.json';
+import { EMPIRE_FORM_METADATA } from './empire-form-metadata.const';
 
 export const METADATA_MAPPING: {
   path: string;
