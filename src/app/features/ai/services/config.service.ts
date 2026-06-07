@@ -36,9 +36,13 @@ export class ConfigService {
     this.#appInstance = initializeApp(firebaseConfig);
 
     // 2. Initialize App Check
-    if (firebaseConfig.recaptchaEnterpriseKey) {
+    const recaptchaEnterpriseKey = firebaseConfig.recaptchaEnterpriseKey;
+    if (recaptchaEnterpriseKey) {
+      // apply debug token in development mode to bypass App Check enforcement
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (self as any).FIREBASE_APPCHECK_DEBUG_TOKEN = isDevMode();
       initializeAppCheck(this.#appInstance, {
-        provider: new ReCaptchaEnterpriseProvider(firebaseConfig.recaptchaEnterpriseKey),
+        provider: new ReCaptchaEnterpriseProvider(recaptchaEnterpriseKey),
         isTokenAutoRefreshEnabled: true,
       });
     } else {
