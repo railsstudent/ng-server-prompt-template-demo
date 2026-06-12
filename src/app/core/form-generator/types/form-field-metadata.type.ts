@@ -8,6 +8,6 @@ export interface FormFieldMetadata {
   isMultiSelect?: boolean;
   inputType?: 'text' | 'number' | 'radio' | 'checkbox' | 'password';
   fieldValidatorConfig?: ValidationConfig;
-  listDataType?: 'country';
+  listDataType?: 'country' | 'city';
   label?: string;
 }

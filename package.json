@@ -1,9 +1,12 @@
 {
   "name": "ng-server-prompt-template-demo",
   "version": "0.0.0",
+  "author": "Connie Leung <cleung334@gmail.com>",
   "scripts": {
     "ng": "ng",
     "config": "node firebase/scripts/generate-firebase-config.js",
+    "firebase:remoteconfig": "node firebase/scripts/download-remote-config.js",
+    "create-cities-json": "node firebase/scripts/generate-city-country-pairs.js",
     "prestart": "npm run config",
     "start": "ng serve",
     "prebuild": "npm run config",
@@ -14,7 +17,6 @@
     "format": "prettier --write \"**/*.{js,ts}\"",
     "prepare": "husky",
     "commitlint": "commitlint --edit",
-    "firebase:remoteconfig": "node firebase/scripts/download-remote-config.js",
     "lintstaged": "lint-staged"
   },
   "prettier": {
