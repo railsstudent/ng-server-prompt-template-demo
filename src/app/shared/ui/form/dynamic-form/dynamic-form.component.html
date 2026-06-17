@@ -42,6 +42,16 @@
                 </select>
               </label>
               <app-form-field-error [formField]="formField" />
+            } @else if (listDataType === 'city') {
+              <label [for]="fieldName" class="dynamic-form-label">
+                <span>{{ label }}</span>
+                <select [id]="fieldName" [formField]="$any(formField)" class="dynamic-form-text">
+                  @for (c of cities; track c.id) {
+                    <option [value]="c.city">{{ c.country }} - {{ c.city }}</option>
+                  }
+                </select>
+              </label>
+              <app-form-field-error [formField]="formField" />
             }
           }
         </div>

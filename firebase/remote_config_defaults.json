@@ -1,8 +1,10 @@
 {
-  "countryTemplateId": "country-national-identity-system-poster-v0-0-1",
+  "cityTemplateId": "city-street-view-v0-0-1",
   "diecastVehicleTemplateId": "diecast-vehicle-v0-0-1",
+  "empireTemplateId": "empire-template-v0-0-1",
   "historicEventTemplateId": "historic-event-v0-0-1",
   "glassBottleSouvenirTemplateId": "glass-bottle-souvenir-v0-0-1",
   "threeDimentionsMapTemplateId": "three-dimentional-map-v0-0-1",
+  "countryTemplateId": "country-animal-guide-v0-0-1",
   "figurineTemplateId": "figurine-v0-0-1"
 }

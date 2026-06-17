@@ -1,0 +1,16 @@
+{
+  "city": {
+    "fieldName": "city",
+    "fieldType": "string",
+    "initialValue": "",
+    "inputControl": "select",
+    "isMultiSelect": false,
+    "listDataType": "city",
+    "label": "City:",
+    "fieldValidatorConfig": {
+      "isRequired": true,
+      "requiredErrorMsg": "City is required",
+      "debounce": 300
+    }
+  }
+}

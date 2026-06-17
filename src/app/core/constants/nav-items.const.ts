@@ -64,6 +64,15 @@ export const NAV_ITEMS: NavItem[] = [
   },
   {
     id: 6,
+    label: 'City Guide',
+    path: '/city-form',
+    iconComponent: MapIconComponent,
+    title: 'City',
+    pageTitle: 'Learn about this city',
+    templateKeyId: 'cityTemplateId',
+  },
+  {
+    id: 7,
     label: 'History',
     path: '/historic-event-form',
     iconComponent: HistoryIconComponent,

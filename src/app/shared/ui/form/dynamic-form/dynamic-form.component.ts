@@ -1,5 +1,6 @@
 import { FormFieldMetadata } from '@/core/form-generator/types/form-field-metadata.type';
 import countryList from '@/public/countries.json';
+import cityList from '@/public/cities.json';
 import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
 import { FormField } from '@angular/forms/signals';
 import FormFieldErrorComponent from '../form-field-error/form-field-error.component';
@@ -19,5 +20,6 @@ export default class DynamicFormComponent {
   btnClicked = output<Event>();
 
   countries = countryList.countries;
+  cities = cityList.results;
   formFieldMetadataList = computed(() => Object.values(this.formFieldMetadata()));
 }
