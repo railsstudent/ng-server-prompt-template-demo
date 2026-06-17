@@ -11,3 +11,8 @@ export interface FormFieldMetadata {
   listDataType?: 'country' | 'city';
   label?: string;
 }
+
+export interface PathFormFieldMetadata {
+  path: string;
+  metadata: Record<string, FormFieldMetadata>;
+}

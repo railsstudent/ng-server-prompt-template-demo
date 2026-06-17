@@ -1,22 +1,20 @@
-import { FormFieldMetadata } from '@/core/form-generator/types/form-field-metadata.type';
+import { MetadataRecordSchema } from '@/core/form-generator/schemas/form-field-metadata.schema';
+import { PathFormFieldMetadata } from '@/core/form-generator/types/form-field-metadata.type';
+import cityFormMetadata from '@/public/metadata/city-form-metadata.json';
 import countryFormMetadata from '@/public/metadata/country-form-metadata.json';
 import historicEventFormMetadata from '@/public/metadata/historic-event-form-metadata.json';
-import cityFormMetadata from '@/public/metadata/city-form-metadata.json';
 
-export const METADATA_MAPPING: {
-  path: string;
-  metadata: Record<string, FormFieldMetadata>;
-}[] = [
+export const METADATA_MAPPING: PathFormFieldMetadata[] = [
   {
     path: '/country-form',
-    metadata: countryFormMetadata as unknown as Record<string, FormFieldMetadata>,
+    metadata: MetadataRecordSchema.parse(countryFormMetadata),
   },
   {
     path: '/historic-event-form',
-    metadata: historicEventFormMetadata as unknown as Record<string, FormFieldMetadata>,
+    metadata: MetadataRecordSchema.parse(historicEventFormMetadata),
   },
   {
     path: '/city-form',
-    metadata: cityFormMetadata as unknown as Record<string, FormFieldMetadata>,
+    metadata: MetadataRecordSchema.parse(cityFormMetadata),
   },
 ];
