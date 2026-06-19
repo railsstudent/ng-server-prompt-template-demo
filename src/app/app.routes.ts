@@ -12,14 +12,9 @@ type LoadComponentReturnType = () =>
   | Observable<Type<unknown> | DefaultExport<Type<unknown>>>
   | Promise<Type<unknown> | DefaultExport<Type<unknown>>>;
 
-function createResolverRoute(path: string, componentName: string) {
-  const componentLoaderMap: Record<string, LoadComponentReturnType> = {
-    'edit-image': () => import('./features/edit-image/edit-image.component'),
-    'country-form': () => import('./shared/ui/form-generator/form-generator.component'),
-    'historic-event-form': () => import('./shared/ui/form-generator/form-generator.component'),
-    'city-form': () => import('./shared/ui/form-generator/form-generator.component'),
-  };
+const componentLoaderMap: Record<string, LoadComponentReturnType> = buildComponentLoaderMap();
 
+function createResolverRoute(path: string, componentName: string) {
   const loadComponent = componentLoaderMap[componentName];
 
   if (!loadComponent) {
@@ -40,6 +35,30 @@ function createResolverRoute(path: string, componentName: string) {
   };
 }
 
+function buildComponentLoaderMap() {
+  const componentKeys = ['country-form', 'historic-event-form', 'city-form'];
+  const formGeneratorLoaderMap = componentKeys.reduce(
+    (acc, key) => {
+      acc[key] = () => import('./shared/ui/form-generator/form-generator.component');
+      return acc;
+    },
+    {} as Record<string, LoadComponentReturnType>,
+  );
+
+  const componentLoaderMap: Record<string, LoadComponentReturnType> = {
+    'edit-image': () => import('./features/edit-image/edit-image.component'),
+    ...formGeneratorLoaderMap,
+  };
+  return componentLoaderMap;
+}
+
+const genImageRoutes = [
+  createResolverRoute('edit-image/:path', 'edit-image'),
+  createResolverRoute('country-form', 'country-form'),
+  createResolverRoute('historic-event-form', 'historic-event-form'),
+  createResolverRoute('city-form', 'city-form'),
+];
+
 export const routes: Routes = [
   {
     path: 'error',
@@ -49,10 +68,7 @@ export const routes: Routes = [
     path: 'home',
     loadComponent: () => import('./features/home/home.component'),
   },
-  createResolverRoute('edit-image/:path', 'edit-image'),
-  createResolverRoute('country-form', 'country-form'),
-  createResolverRoute('historic-event-form', 'historic-event-form'),
-  createResolverRoute('city-form', 'city-form'),
+  ...genImageRoutes,
   {
     path: '',
     pathMatch: 'full',

@@ -63,8 +63,25 @@ export class NavService {
     return undefined;
   }
 
-  findMetadataByPath(path: string): Record<string, FormFieldMetadata> {
+  private findMetadataByPath(path: string): Record<string, FormFieldMetadata> {
     const item = METADATA_MAPPING.find((item) => item.path === path);
     return item?.metadata || {};
+  }
+
+  private findNavItemByPath(url: string) {
+    const item = this.navItems.find((item) => item.path === url);
+    return item;
+  }
+
+  getRouteData(url: string) {
+    const item = this.findNavItemByPath(url);
+    const metadata = this.findMetadataByPath(url);
+
+    return {
+      title: !item ? 'Edit An Image' : item.title,
+      pageTitle: item?.pageTitle || 'Edit An Image',
+      templateKeyId: item?.templateKeyId,
+      metadata,
+    };
   }
 }

@@ -4,26 +4,19 @@ import { PageTitleTemplateKeyId } from '@/shared/types/page-title-template-keyid
 import { inject } from '@angular/core';
 import { ResolveFn, RouterStateSnapshot } from '@angular/router';
 
-function findNavItemByPath(url: string) {
-  const navService = inject(NavService);
-  const item = navService.navItems.find((item) => item.path === url);
-
-  return item;
-}
-
 export const editeRouteTitleResolver: ResolveFn<string> = (_, state: RouterStateSnapshot) => {
-  const item = findNavItemByPath(state.url);
-  return !item ? 'Edit An Image' : item.title;
+  return inject(NavService).getRouteData(state.url).title;
 };
 
 export const editePageTitleTemplateKeyIdResolver: ResolveFn<PageTitleTemplateKeyId> = (
   _,
   state: RouterStateSnapshot,
 ) => {
-  const item = findNavItemByPath(state.url);
+  const data = inject(NavService).getRouteData(state.url);
+  const { pageTitle, templateKeyId } = data;
   return {
-    pageTitle: item?.pageTitle || 'Edit An Image',
-    templateKeyId: item?.templateKeyId,
+    pageTitle,
+    templateKeyId,
   };
 };
 
@@ -31,6 +24,5 @@ export const metadataResolver: ResolveFn<Record<string, FormFieldMetadata>> = (
   _,
   state: RouterStateSnapshot,
 ) => {
-  const navService = inject(NavService);
-  return navService.findMetadataByPath(state.url);
+  return inject(NavService).getRouteData(state.url).metadata;
 };
