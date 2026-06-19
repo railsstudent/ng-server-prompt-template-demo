@@ -2,7 +2,7 @@
   "city": {
     "fieldName": "city",
     "fieldType": "string",
-    "initialValue": "",
+    "initialValue": "Hong Kong",
     "inputControl": "select",
     "isMultiSelect": false,
     "listDataType": "city",

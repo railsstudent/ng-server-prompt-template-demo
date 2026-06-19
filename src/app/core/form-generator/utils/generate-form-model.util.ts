@@ -1,4 +1,5 @@
 import countryList from '@/public/countries.json';
+import cityList from '@/public/cities.json';
 import { FormFieldMetadata } from '../types/form-field-metadata.type';
 import { DynamicFormModelFromRecord } from '../types/dynamic-form-model.type';
 
@@ -16,6 +17,9 @@ export function generateFormModelData<T extends Record<string, FormFieldMetadata
         (c: { code: string; name: string }) => c.name === value || c.code === value,
       );
       value = countryInfo ? value : '';
+    } else if (metadata.listDataType === 'city') {
+      const cityInfo = cityList.results.find((c) => c.city === value);
+      value = cityInfo ? value : '';
     }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
