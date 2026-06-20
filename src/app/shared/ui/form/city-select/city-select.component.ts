@@ -7,10 +7,16 @@ import { CountryCityPair } from './types/country-city-pair.type';
   imports: [],
   template: ` <label [for]="fieldName()" class="dynamic-form-label">
     <span>{{ label() }}</span>
-    <select [id]="fieldName()" class="dynamic-form-text">
+    <select
+      [id]="fieldName()"
+      class="dynamic-form-text"
+      [value]="value()"
+      (change)="onSelectionChange($event)"
+    >
+      <option value="" disabled hidden>Please select a city</option>
       @for (c of cities(); track c.id) {
         @let displayValue = c.country + ' - ' + c.city;
-        <option [value]="c.city">{{ displayValue }}</option>
+        <option [value]="c.city" [selected]="value() === c.city">{{ displayValue }}</option>
       }
     </select>
   </label>`,
@@ -23,4 +29,12 @@ export class CitySelectComponent implements FormValueControl<string> {
   label = input.required<string>();
   fieldName = input.required<string>();
   cities = input.required<CountryCityPair[]>();
+
+  onSelectionChange(event: Event) {
+    event.preventDefault();
+    if (event.target) {
+      const element = event.target as HTMLSelectElement;
+      this.value.set(element.value);
+    }
+  }
 }

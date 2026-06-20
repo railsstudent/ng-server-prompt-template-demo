@@ -32,7 +32,10 @@ export class CountrySelectComponent implements FormValueControl<string> {
   countries = input.required<Country[]>();
 
   onSelectionChange(event: Event) {
-    const selectElement = event.target as HTMLSelectElement;
-    this.value.set(selectElement.value || '');
+    event.preventDefault();
+    if (event.target) {
+      const selectElement = event.target as HTMLSelectElement;
+      this.value.set(selectElement.value || '');
+    }
   }
 }

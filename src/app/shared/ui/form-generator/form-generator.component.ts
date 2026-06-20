@@ -3,10 +3,20 @@ import { setUpFormSchema } from '@/core/form-generator/utils/generate-custom-val
 import { generateFormModelData } from '@/core/form-generator/utils/generate-form-model.util';
 import { ImageFacadeService } from '@/features/ai-generation/services/image-facade.service';
 import { TemplateKey } from '@/features/ai/types/template-key.type';
+import cityList from '@/public/cities.json';
 import { PageTitleTemplateKeyId } from '@/shared/types/page-title-template-keyid.type';
 import DynamicFormComponent from '@/shared/ui/form/dynamic-form/dynamic-form.component';
 import ImageDisplayComponent from '@/shared/ui/image-display/image-display.component';
-import { ChangeDetectionStrategy, Component, computed, inject, input, signal } from '@angular/core';
+import { getStringValue } from '@/shared/utils/value-transformer.util';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  input,
+  linkedSignal,
+  signal,
+} from '@angular/core';
 import { form } from '@angular/forms/signals';
 import { ActivatedRoute } from '@angular/router';
 
@@ -38,6 +48,25 @@ export default class FormGeneratorComponent {
     () => !!this.pageTitleTemplateKeyId().templateKeyId && this.genericForm().valid(),
   );
 
+  transformedModel = linkedSignal({
+    source: () => this.modelSignal(),
+    computation: (data) => {
+      if (data['city']) {
+        const cityValue = getStringValue(data['city']);
+        if (cityValue) {
+          const cityRecord = cityList.results.find((item) => item.city === cityValue);
+          if (cityRecord) {
+            return {
+              city: cityRecord.city,
+              country: cityRecord.country,
+            };
+          }
+        }
+      }
+      return data;
+    },
+  });
+
   #imageFacade = inject(ImageFacadeService);
 
   isDisabled = computed(() => this.#imageFacade.uiState().isLoading || !this.hasRequiredData());
@@ -52,7 +81,7 @@ export default class FormGeneratorComponent {
     await this.#imageFacade.generateImage(
       this.pageTitleTemplateKeyId().templateKeyId as TemplateKey,
       this.hasRequiredData(),
-      this.modelSignal(),
+      this.transformedModel(),
     );
   }
 }

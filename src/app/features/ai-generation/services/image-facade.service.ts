@@ -32,6 +32,7 @@ export class ImageFacadeService {
       if (hasRequiredData) {
         this.#newImage.set('');
         const templateId = this.#templateConfigService.getTemplateValue(templateKey);
+        console.log('Template parameters', params);
         const image = await this.#imageGenerationService.generateImage(
           hasRequiredData,
           templateId,
