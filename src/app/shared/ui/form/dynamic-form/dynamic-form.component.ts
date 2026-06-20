@@ -1,13 +1,14 @@
 import { FormFieldMetadata } from '@/core/form-generator/types/form-field-metadata.type';
-import countryList from '@/public/countries.json';
 import cityList from '@/public/cities.json';
+import countryList from '@/public/countries.json';
+import { CountrySelectComponent } from '@/shared/ui/form/country-select/country-select.component';
+import FormFieldErrorComponent from '@/shared/ui/form/form-field-error/form-field-error.component';
 import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
 import { FormField } from '@angular/forms/signals';
-import FormFieldErrorComponent from '../form-field-error/form-field-error.component';
 
 @Component({
   selector: 'app-dynamic-form',
-  imports: [FormField, FormFieldErrorComponent],
+  imports: [FormField, FormFieldErrorComponent, CountrySelectComponent],
   styleUrl: './dynamic-form.component.css',
   templateUrl: './dynamic-form.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

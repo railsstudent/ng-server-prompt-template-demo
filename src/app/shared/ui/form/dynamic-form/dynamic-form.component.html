@@ -14,7 +14,7 @@
               <input
                 [id]="fieldName"
                 [type]="inputType"
-                [formField]="$any(formField)"
+                [formField]="formField"
                 class="dynamic-form-text"
               />
             </label>
@@ -24,7 +24,7 @@
               <span>{{ label }}</span>
               <textarea
                 [id]="fieldName"
-                [formField]="$any(formField)"
+                [formField]="formField"
                 rows="5"
                 class="dynamic-form-text"
               ></textarea>
@@ -33,14 +33,12 @@
           } @else if (inputControl === 'select') {
             @let listDataType = field.listDataType || '';
             @if (listDataType === 'country') {
-              <label [for]="fieldName" class="dynamic-form-label">
-                <span>{{ label }}</span>
-                <select [id]="fieldName" [formField]="$any(formField)" class="dynamic-form-text">
-                  @for (c of countries; track c.code) {
-                    <option [value]="c.name">{{ c.name }}</option>
-                  }
-                </select>
-              </label>
+              <app-country-select
+                [formField]="formField"
+                [label]="label"
+                [fieldName]="fieldName"
+                [countries]="countries"
+              />
               <app-form-field-error [formField]="formField" />
             } @else if (listDataType === 'city') {
               <label [for]="fieldName" class="dynamic-form-label">
