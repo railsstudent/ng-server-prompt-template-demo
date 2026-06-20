@@ -1,6 +1,5 @@
 import { FormFieldMetadata } from '@/core/form-generator/types/form-field-metadata.type';
-import cityList from '@/public/cities.json';
-import countryList from '@/public/countries.json';
+import { getCities, getCountries } from '@/core/location/utils/location.util';
 import { CitySelectComponent } from '@/shared/ui/form/city-select/city-select.component';
 import { CountrySelectComponent } from '@/shared/ui/form/country-select/country-select.component';
 import FormFieldErrorComponent from '@/shared/ui/form/form-field-error/form-field-error.component';
@@ -21,7 +20,7 @@ export default class DynamicFormComponent {
   isBtnDisabled = input.required<boolean>();
   btnClicked = output<Event>();
 
-  countries = countryList.countries;
-  cities = cityList.results;
+  countries = getCountries();
+  cities = getCities();
   formFieldMetadataList = computed(() => Object.values(this.formFieldMetadata()));
 }

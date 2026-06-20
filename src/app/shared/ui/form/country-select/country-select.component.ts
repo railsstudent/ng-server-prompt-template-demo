@@ -1,6 +1,6 @@
+import { Country } from '@/core/location/types/country.type';
 import { ChangeDetectionStrategy, Component, input, model } from '@angular/core';
 import { FormValueControl } from '@angular/forms/signals';
-import { Country } from './types/country.type';
 
 @Component({
   selector: 'app-country-select',

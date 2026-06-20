@@ -1,5 +1,4 @@
-import countryList from '@/public/countries.json';
-import cityList from '@/public/cities.json';
+import { findCityByName, findCountry } from '../../location/utils/location.util';
 import { FormFieldMetadata } from '../types/form-field-metadata.type';
 import { DynamicFormModelFromRecord } from '../types/dynamic-form-model.type';
 
@@ -13,12 +12,10 @@ export function generateFormModelData<T extends Record<string, FormFieldMetadata
     let value = metadata.initialValue;
 
     if (metadata.listDataType === 'country') {
-      const countryInfo = countryList.countries.find(
-        (c: { code: string; name: string }) => c.name === value || c.code === value,
-      );
+      const countryInfo = findCountry(value);
       value = countryInfo ? value : '';
     } else if (metadata.listDataType === 'city') {
-      const cityInfo = cityList.results.find((c) => c.city === value);
+      const cityInfo = findCityByName(value);
       value = cityInfo ? value : '';
     }
 

@@ -1,13 +1,13 @@
 import { FormFieldMetadata } from '@/core/form-generator/types/form-field-metadata.type';
 import { setUpFormSchema } from '@/core/form-generator/utils/generate-custom-validation.util';
 import { generateFormModelData } from '@/core/form-generator/utils/generate-form-model.util';
+import { getStringValue } from '@/core/form-generator/utils/value-transformer.util';
+import { findCityByName } from '@/core/location/utils/location.util';
 import { ImageFacadeService } from '@/features/ai-generation/services/image-facade.service';
 import { TemplateKey } from '@/features/ai/types/template-key.type';
-import cityList from '@/public/cities.json';
 import { PageTitleTemplateKeyId } from '@/shared/types/page-title-template-keyid.type';
 import DynamicFormComponent from '@/shared/ui/form/dynamic-form/dynamic-form.component';
 import ImageDisplayComponent from '@/shared/ui/image-display/image-display.component';
-import { getStringValue } from '@/shared/utils/value-transformer.util';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -54,7 +54,7 @@ export default class FormGeneratorComponent {
       if (data['city']) {
         const cityValue = getStringValue(data['city']);
         if (cityValue) {
-          const cityRecord = cityList.results.find((item) => item.city === cityValue);
+          const cityRecord = findCityByName(cityValue);
           if (cityRecord) {
             return {
               city: cityRecord.city,

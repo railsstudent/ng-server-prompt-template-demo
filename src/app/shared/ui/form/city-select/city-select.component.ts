@@ -1,6 +1,6 @@
+import { City } from '@/core/location/types/city.type';
 import { ChangeDetectionStrategy, Component, input, model } from '@angular/core';
 import { FormValueControl } from '@angular/forms/signals';
-import { CountryCityPair } from './types/country-city-pair.type';
 
 @Component({
   selector: 'app-city-select',
@@ -28,7 +28,7 @@ export class CitySelectComponent implements FormValueControl<string> {
 
   label = input.required<string>();
   fieldName = input.required<string>();
-  cities = input.required<CountryCityPair[]>();
+  cities = input.required<City[]>();
 
   onSelectionChange(event: Event) {
     event.preventDefault();
