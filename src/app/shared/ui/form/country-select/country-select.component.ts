@@ -28,9 +28,7 @@ export class CountrySelectComponent implements FormValueControl<string> {
   value = model('');
 
   label = input.required<string>();
-
   fieldName = input.required<string>();
-
   countries = input.required<Country[]>();
 
   onSelectionChange(event: Event) {
