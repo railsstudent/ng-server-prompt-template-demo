@@ -31,24 +31,19 @@
             </label>
             <app-form-field-error [formField]="formField" />
           } @else if (inputControl === 'select') {
-            @let listDataType = field.listDataType || '';
-            @if (listDataType === 'country') {
-              <app-country-select
-                [formField]="formField"
-                [label]="label"
-                [fieldName]="fieldName"
-                [countries]="countries"
-              />
-              <app-form-field-error [formField]="formField" />
-            } @else if (listDataType === 'city') {
-              <app-city-select
-                [formField]="formField"
-                [label]="label"
-                [fieldName]="fieldName"
-                [cities]="cities"
-              />
-              <app-form-field-error [formField]="formField" />
-            }
+            @let listDataType = field.listDataType || 'city';
+            @let config = selectConfigs[listDataType];
+            <app-data-list-select
+              [formField]="formField"
+              [label]="label"
+              [fieldName]="fieldName"
+              [placeholder]="config.placeholder"
+              [items]="config.items"
+              [trackByFn]="config.trackBy"
+              [optionValueFn]="config.value"
+              [optionLabelFn]="config.label"
+            />
+            <app-form-field-error [formField]="formField" />
           }
         </div>
       }

@@ -1,0 +1,19 @@
+<label [for]="fieldName()" class="dynamic-form-label">
+  <span>{{ label() }}</span>
+  <select
+    [id]="fieldName()"
+    class="dynamic-form-text"
+    [value]="value()"
+    (change)="onSelectionChange($event)"
+  >
+    <option value="" disabled hidden>{{ placeholder() }}</option>
+    @for (item of items(); track trackByFn()(item)) {
+      <option
+        [value]="optionValueFn()(item)"
+        [selected]="optionValueFn()(item) === value()"
+      >
+        {{ optionLabelFn()(item) }}
+      </option>
+    }
+  </select>
+</label>

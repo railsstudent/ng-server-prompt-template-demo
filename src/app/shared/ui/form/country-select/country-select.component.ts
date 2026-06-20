@@ -1,4 +1,4 @@
-import { Country } from '@/core/location/types/country.type';
+import { Country } from '@/core/location/schemas/country.schema';
 import { ChangeDetectionStrategy, Component, input, model } from '@angular/core';
 import { FormValueControl } from '@angular/forms/signals';
 

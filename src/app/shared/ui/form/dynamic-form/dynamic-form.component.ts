@@ -1,14 +1,13 @@
 import { FormFieldMetadata } from '@/core/form-generator/types/form-field-metadata.type';
-import { getCities, getCountries } from '@/core/location/utils/location.util';
-import { CitySelectComponent } from '@/shared/ui/form/city-select/city-select.component';
-import { CountrySelectComponent } from '@/shared/ui/form/country-select/country-select.component';
+import { LOCATION_SELECT_CONFIG } from '@/core/location/location-select.config';
+import { DataListSelectComponent } from '@/shared/ui/form/data-list-select/data-list-select.component';
 import FormFieldErrorComponent from '@/shared/ui/form/form-field-error/form-field-error.component';
 import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
 import { FormField } from '@angular/forms/signals';
 
 @Component({
   selector: 'app-dynamic-form',
-  imports: [FormField, FormFieldErrorComponent, CountrySelectComponent, CitySelectComponent],
+  imports: [FormField, FormFieldErrorComponent, DataListSelectComponent],
   styleUrl: './dynamic-form.component.css',
   templateUrl: './dynamic-form.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -20,7 +19,6 @@ export default class DynamicFormComponent {
   isBtnDisabled = input.required<boolean>();
   btnClicked = output<Event>();
 
-  countries = getCountries();
-  cities = getCities();
+  selectConfigs = LOCATION_SELECT_CONFIG;
   formFieldMetadataList = computed(() => Object.values(this.formFieldMetadata()));
 }

@@ -1,4 +1,4 @@
-import { City } from '@/core/location/types/city.type';
+import { City } from '@/core/location/schemas/city.schema';
 import { ChangeDetectionStrategy, Component, input, model } from '@angular/core';
 import { FormValueControl } from '@angular/forms/signals';
 

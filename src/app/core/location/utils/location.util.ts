@@ -1,6 +1,6 @@
 import { getStringValue } from '@/core/form-generator/utils/value-transformer.util';
-import { City } from '@/core/location/types/city.type';
-import { Country } from '@/core/location/types/country.type';
+import { City } from '@/core/location/schemas/city.schema';
+import { Country } from '@/core/location/schemas/country.schema';
 import cityList from '@/public/cities.json';
 import countryList from '@/public/countries.json';
 
