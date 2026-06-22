@@ -4,6 +4,7 @@ import {
   maxLength,
   min,
   minLength,
+  PathKind,
   required,
   SchemaPath,
 } from '@angular/forms/signals';
@@ -36,14 +37,14 @@ const VALIDATOR_REGISTRY: Partial<Record<keyof FormFieldValidationConfig, Valida
   },
   min: (path, config) => {
     if (config.min !== undefined && config.min > 0) {
-      min(path as SchemaPath<number | string | null>, config.min, {
+      min(path as SchemaPath<number | null, 1, PathKind.Root>, config.min, {
         message: config.minErrorMsg ?? 'Minimum value not met',
       });
     }
   },
   max: (path, config) => {
     if (config.max !== undefined && config.max > 0) {
-      max(path as SchemaPath<number | string | null>, config.max, {
+      max(path as SchemaPath<number | null, 1, PathKind.Root>, config.max, {
         message: config.maxErrorMsg ?? 'Maximum value exceeded',
       });
     }
