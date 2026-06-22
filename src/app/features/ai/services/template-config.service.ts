@@ -1,4 +1,4 @@
-import { DestroyRef, inject, Injectable, signal } from '@angular/core';
+import { DestroyRef, inject, Service, signal } from '@angular/core';
 import {
   activate,
   fetchAndActivate,
@@ -9,9 +9,7 @@ import {
 import { TEMPLATE_KEYS } from '../constants/template-keys.const';
 import { TemplateKey, TemplateMap } from '../types/template-key.type';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Service()
 export class TemplateConfigService {
   #templates = signal<TemplateMap>({
     countryTemplateId: '',

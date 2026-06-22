@@ -1,11 +1,9 @@
 import { ContentMode } from '@/features/ai/types/data-mode.type';
-import { inject, Injectable } from '@angular/core';
+import { inject, Service } from '@angular/core';
 import { FinishReason } from 'firebase/ai';
 import { SERVER_TEMPLATE_MODEL } from '../constants/server-template-model.token';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Service()
 export class ServerPromptService {
   #model = inject(SERVER_TEMPLATE_MODEL);
 

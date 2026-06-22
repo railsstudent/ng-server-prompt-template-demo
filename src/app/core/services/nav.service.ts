@@ -5,14 +5,12 @@ import { TemplateConfigService } from '@/features/ai/services/template-config.se
 import { TemplateKey } from '@/features/ai/types/template-key.type';
 import { PageTitleTemplateKeyId } from '@/shared/types/page-title-template-keyid.type';
 import { createBreadcrumb } from '@/shared/utils/create-breadcrumb';
-import { computed, inject, Injectable, linkedSignal } from '@angular/core';
+import { computed, inject, linkedSignal, Service } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Event, EventType, NavigationEnd, Router } from '@angular/router';
 import { filter, shareReplay } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Service()
 export class NavService {
   private readonly templateConfigService = inject(TemplateConfigService);
   private readonly route = inject(Router);

@@ -1,13 +1,11 @@
-import rcDefaults from '@/firebase/remote_config_defaults.json';
 import firebaseConfig from '@/firebase.config.json';
-import { Injectable, isDevMode } from '@angular/core';
+import rcDefaults from '@/firebase/remote_config_defaults.json';
+import { isDevMode, Service } from '@angular/core';
 import { FirebaseApp, initializeApp } from 'firebase/app';
 import { initializeAppCheck, ReCaptchaEnterpriseProvider } from 'firebase/app-check';
 import { fetchAndActivate, getRemoteConfig, RemoteConfig } from 'firebase/remote-config';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Service()
 export class ConfigService {
   #appInstance: FirebaseApp | null = null;
   #remoteConfig: RemoteConfig | null = null;

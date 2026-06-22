@@ -1,10 +1,8 @@
 import { ServerPromptService } from '@/features/ai/services/server-prompt.service';
-import { inject, Injectable } from '@angular/core';
+import { inject, Service } from '@angular/core';
 import { GlobalStateService } from './global-state.service';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Service()
 export class ImageGenerationService {
   #globalStateService = inject(GlobalStateService);
   #serverPromptService = inject(ServerPromptService);

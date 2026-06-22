@@ -1,9 +1,7 @@
-import { computed, Injectable, signal } from '@angular/core';
+import { computed, Service, signal } from '@angular/core';
 import { Status } from '../types/status.type';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Service()
 export class GlobalStateService {
   #isLoading = signal(false);
   #errorMsg = signal('');
