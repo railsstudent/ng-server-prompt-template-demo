@@ -1,7 +1,7 @@
 @reference "../../../../../styles.css";
 
 .footer-container {
-  @apply bg-slate-800 mt-auto;
+  @apply bg-indigo-500 text-white mt-auto;
 }
 
 .footer-content {
